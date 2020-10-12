@@ -24,3 +24,8 @@ pip install -r requirements.txt
 ```shell script
 ./manage.py createsuperuser
 ```
+
+### 6. start web server
+```shell script
+./manage.py runserver 8000
+```
