@@ -2,7 +2,7 @@ FROM python:3-slim
 
 EXPOSE 8000
 
-RUN useradd -u 999 -M -s /bin/bash -g users appuser
+RUN useradd -u 999 -m -s /bin/bash -g users appuser
 
 RUN mkdir -p /opt/family-tools
 RUN chown appuser: /opt/family-tools
