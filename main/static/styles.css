@@ -1,0 +1,16 @@
+td.min, th.min {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+td.col-center, th.col-center {
+    text-align: center;
+}
+
+td.col-right, th.col-right {
+    text-align: right;
+}

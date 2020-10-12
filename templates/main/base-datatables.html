@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% load adminlte_helpers i18n %}
+{% load static %}
+
+{% block stylesheets %}
+    {{ block.super }}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
+
+    <script src="{% static 'admin-lte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+{% endblock %}

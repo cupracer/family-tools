@@ -1,0 +1,56 @@
+{% extends 'adminlte/lib/_main_sidebar.html' %}
+
+{% load adminlte_helpers %}
+{%load static %}
+
+{% block logo_text %}<span class="brand-text font-weight-light">{{ site.name }}</span>{% endblock %}
+
+{% block user_panel %}{% endblock user_panel %}
+
+<!-- sidebar menu: : style can be found in sidebar.less -->
+{% block nav_links_ul %}
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        {% block nav_links_outer %}
+        <li class="nav-header">{% block nav_heading %}MAIN{% endblock %}</li>
+
+        {% block nav_links %}
+            <li class="nav-item has-tree-view menu-open">
+                <a href="#" class="nav-link {% if nav.first_level == 'housekeeping_book' %}active{% endif %}">
+                    <i class="nav-icon fas fa-object-group"></i> <p>Housekeeping book</p>
+                    <p><i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{% url 'account_holder_index' %}" class="nav-link {% if nav.second_level == 'account_holders' %}active{% endif %}">
+                            <i class="nav-icon fas fa-circle"></i> Account holders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'category_index' %}" class="nav-link {% if nav.second_level == 'categories' %}active{% endif %}">
+                            <i class="nav-icon fas fa-circle"></i> Categories
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'booking_index' %}" class="nav-link {% if nav.second_level == 'bookings' %}active{% endif %}">
+                            <i class="nav-icon fas fa-circle"></i> Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'periodic_booking_index' %}" class="nav-link {% if nav.second_level == 'periodic_bookings' %}active{% endif %}">
+                            <i class="nav-icon fas fa-circle"></i> Periodic bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'statistics_category_totals_per_month' %}" class="nav-link {% if nav.second_level == 'statistics_category_totals_per_month' %}active{% endif %}">
+                            <i class="nav-icon fas fa-circle"></i> Statistics
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        {% endblock nav_links %}
+        {% endblock nav_links_outer %}
+        </ul>
+    </nav>
+{% endblock nav_links_ul %}

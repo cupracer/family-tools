@@ -1,0 +1,15 @@
+asgiref==3.2.10
+Django==3.1.2
+pytz==2020.1
+sqlparse==0.3.1
+django-adminlte3==0.1.6
+django-guardian==2.3.0
+django-select2==7.4.2
+django-bootstrap-modal-forms==2.0.0
+djangorestframework==3.12.1
+django-bootstrap-datepicker-plus==3.0.5
+django-bootstrap4==2.2.0
+djangorestframework-datatables==0.5.2
+python-dateutil==2.8.1
+simplejson==3.17.2
+djangorestframework-guardian==0.3.0

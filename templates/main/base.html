@@ -1,0 +1,52 @@
+{% extends 'adminlte/base.html' %}
+
+{% load adminlte_helpers i18n %}
+{% load static %}
+
+{% block stylesheets %}
+    {{ block.super }}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    {{ form.media.css }}
+{% endblock %}
+
+{% block bodyclass %}text-sm{% endblock %}
+
+{% block title %}
+    {% if site.page_title %}
+        {{ site.page_title }} -
+    {% endif %}
+    {% if site.app_title %}
+        {{ site.app_title }} -
+    {% endif %}
+    {% if site.name %}
+        {{ site.name }}
+    {% endif %}
+{% endblock %}
+
+{% block nav_header %}
+    {% include 'main/_main_header.html' %}
+{% endblock %}
+
+{% block nav_sidebar %}
+    {% include 'main/_main_sidebar.html' %}
+{% endblock %}
+
+{% block javascript %}
+    {% block scripts %}
+        <script src="{% static 'admin-lte/plugins/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'admin-lte/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+        <script src="{% static 'admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js' %} "></script>
+        <script src="{% static 'admin-lte/dist/js/adminlte.min.js' %}"></script>
+
+        {{ form.media.js }}
+
+        {% block datatable_js %}{% endblock %}
+    {% endblock %}
+{% endblock %}
+
+{% block nav_footer %}{% endblock %}

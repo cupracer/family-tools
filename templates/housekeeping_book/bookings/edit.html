@@ -1,0 +1,94 @@
+{% extends 'main/base.html' %}
+
+{% load adminlte_helpers i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">{{ site.page_title }}</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="box">
+                            <div class="box-body">
+                                <form method="POST" class="post-form">
+                                    {% csrf_token %}
+                                    {{ form.non_field_errors }}
+                                    {{ form.source.errors }}
+                                    {{ form.source }}
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ form.booking_date.label_tag }}</label>
+                                                {{ form.booking_date.errors }}
+                                                {{ form.booking_date }}
+                                                <small id="booking_date_help" class="form-text text-muted">Datum der Buchung</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ form.category.label_tag }}</label>
+                                                {{ form.category.errors }}
+                                                {{ form.category }}
+                                                <small id="category_help" class="form-text text-muted">Kategorie für diese Buchung</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>{{ form.account_holder.label_tag }}</label>
+                                                {{ form.account_holder.errors }}
+                                                {{ form.account_holder }}
+                                                <small id="account_holder_help" class="form-text text-muted">Sender / Empfänger dieser Buchung</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>{{ form.amount.label_tag }}</label>
+                                                {{ form.amount.errors }}
+                                                {{ form.amount }}
+                                                <small id="amount_help" class="form-text text-muted">Minuszeichen (-) für Ausgaben</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>{{ form.description.label_tag }}</label>
+                                                {{ form.description.errors }}
+                                                {{ form.description }}
+                                                <small id="description_help" class="form-text text-muted">Ergänzende Informationen zu dieser Buchung</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="float-right">
+                                        <a class="btn btn-default" href="{% url 'booking_index' %}">Cancel</a>
+                                        <button type="submit" class="save btn btn-primary pull-right">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+{% endblock %}

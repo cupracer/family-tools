@@ -1,0 +1,168 @@
+{% extends 'main/base-datatables.html' %}
+
+{% load adminlte_helpers i18n %}
+{% load static %}
+
+{% block content %}
+    {{ cats_data }}
+    <div class="card">
+            <div class="card-header">
+              <h3 class="card-title p-2">{{ site.page_title }}</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <form method="POST" class="post-form">
+                                    {% csrf_token %}
+                                    {{ form.non_field_errors }}
+                                    {{ form.source.errors }}
+                                    {{ form.source }}
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                {{ form.user.errors }}
+                                                {{ form.user }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                {{ form.year.errors }}
+                                                {{ form.year }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                {{ form.include_periodic_bookings.errors }}
+                                                {{ form.include_periodic_bookings }} periodic
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                {{ form.spread_amount.errors }}
+                                                {{ form.spread_amount }} spread
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                {{ form.include_dynamic_bookings.errors }}
+                                                {{ form.include_dynamic_bookings }} dynamic
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <button type="submit" class="save btn btn-default pull-right">Show</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="box-body">
+                                <table id="datatables" class="table" style="width: 100%">
+                                    <thead>
+                                    <tr>
+                                        <th data-data="category">Kategorie</th>
+                                        <th data-data="1">Jan</th>
+                                        <th data-data="2">Feb</th>
+                                        <th data-data="3">Mär</th>
+                                        <th data-data="4">Apr</th>
+                                        <th data-data="5">Mai</th>
+                                        <th data-data="6">Jun</th>
+                                        <th data-data="7">Jul</th>
+                                        <th data-data="8">Aug</th>
+                                        <th data-data="9">Sep</th>
+                                        <th data-data="10">Okt</th>
+                                        <th data-data="11">Nov</th>
+                                        <th data-data="12">Dez</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>TOTAL</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            dataTables = $('#datatables').DataTable({
+                "data": {{ data|safe }},
+                "language": {
+                    "decimal": ",",
+                    "thousands": "."
+                },
+                "paging": false,
+                "searching": false,
+                "info": false,
+                "responsive": true,
+                "scrollX": true,
+                "columnDefs": [
+                    {
+                        "targets": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                        "className": "col-right",
+                        render: function (data, type, row) {
+                            var color = 'black';
+
+                            if(data >= 0) {
+                                color = 'green';
+                            }else if(data < 0) {
+                                color = 'red';
+                            }
+
+                            return '<span class="text-' + color + '">' + data + '</span>';
+                        }
+                    }
+                ],
+                'footerCallback': function (tfoot, data, start, end, display) {
+                    var total = {{ total|safe }};
+                    if (total) {
+                        var $th = $(tfoot).find('th');
+                        $th.eq(0).html(total['category']);
+                        for(var i=1; i<=12; i++) {
+                            var totalValue = total[i];
+                            var color = 'black';
+
+                            if(totalValue >= 0) {
+                                color = 'green';
+                            }else if(totalValue < 0) {
+                                color = 'red';
+                            }
+
+                            $th.eq(i).html('<span class="text-' + color + '">' + totalValue + '</span>');
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

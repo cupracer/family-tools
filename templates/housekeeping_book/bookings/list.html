@@ -1,0 +1,86 @@
+{% extends 'main/base-datatables.html' %}
+
+{% load adminlte_helpers i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title p-2">{{ site.page_title }}</h3>
+              {% if can_add %}
+                <a class="btn btn-outline-primary float-right" href="{% url 'booking_new' %}">Add...</a>
+              {% endif %}
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="datatables" class="table table-bordered table-striped" data-server-side="true" data-ajax="/api/housekeeping_book/bookings/?format=datatables">
+                <thead>
+                    <tr>
+                        <th data-data="id" class="min">ID</th>
+                        <th data-data="booking_date">Date</th>
+                        {% if request.user.is_staff %}
+                            <th data-data="user.username">Username</th>
+                        {% endif %}
+                        <th data-data="category.name">Category</th>
+                        <th data-data="account_holder.name">Account holder</th>
+                        <th data-data="description">Description</th>
+                        <th data-data="amount">Amount</th>
+                        <th class="min">&nbsp;</th>
+                    </tr>
+                </thead>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+{% endblock %}
+
+{% block datatable_js %}
+<script type="text/javascript">
+        $(document).ready(function () {
+            dataTables =
+            $('#datatables').DataTable({
+                "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]],
+                "order": [[ 1, "desc" ], [0, "desc"]],
+                "columns": [
+                   { "className": "min col-right", },
+                    { "className": "min col-center", },
+                    {% if request.user.is_staff %}
+                        { "className": "min" },
+                    {% endif %}
+                    null,
+                    null,
+                    null,
+                    {
+                        "className": "min col-right",
+                        "type": "numeric-comma",
+                        render: function (data, type, row) {
+                            color = 'red';
+                            if(row['amount'] >= 0) {
+                                color = 'green';
+                            }
+
+                            return '<span class="text-' + color + '">' + row['amount'] + '</span>';
+                        }
+                    },
+                    {
+                        "orderable": false, "searchable": false,
+                        "render": function (data, type, row) {
+                            let rowId = row['id'];
+                            let links = '<div class="btn-group btn-group-xs" role="group">';
+                            links+= '<a class="btn btn-xs btn-outline-primary" href="/housekeeping_book/bookings/' + rowId + '/edit"><i class="fa fa-fw fa-edit"></i></a>'
+                            links+= '<a class="btn btn-xs btn-outline-danger" href="/housekeeping_book/bookings/' + rowId + '/delete"><i class="fa fa-fw fa-trash"></i></a>'
+                            links+= '</div>';
+                            return links;
+                        }
+                    }
+                ],
+            });
+        });
+    </script>
+{% endblock %}
