@@ -12,4 +12,4 @@ jobs:
         name: docker.pkg.github.com/cupracer/family-tools/family-tools
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PKG_GITHUB_TOKEN }}
-        dockerfile: .docker/Dockerfile
+        dockerfile: Dockerfile
