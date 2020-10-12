@@ -15,4 +15,4 @@ WORKDIR /opt/family-tools
 RUN pip install -r requirements.txt
 RUN ./manage.py collectstatic
 
-CMD ["/opt/family-tools/.docker/run.sh"]
+CMD ["/bin/sh", "/opt/family-tools/.docker/run.sh"]
