@@ -5,11 +5,10 @@ EXPOSE 8000
 RUN useradd -u 999 -m -s /bin/bash -g users appuser
 
 RUN mkdir -p /opt/family-tools
-RUN chown appuser: /opt/family-tools
+COPY . /opt/family-tools
+RUN chown -R appuser: /opt/family-tools
 
 USER appuser
-
-COPY . /opt/family-tools
 WORKDIR /opt/family-tools
 
 RUN pip install -r requirements.txt
