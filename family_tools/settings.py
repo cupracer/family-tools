@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django_select2',
     'bootstrap_modal_forms',
     'bootstrap_datepicker_plus',
-    'main.apps.TeamtoolsConfig',
+    'main.apps.FamilyToolsConfig',
     'guardian',
     'housekeeping_book',
 ]

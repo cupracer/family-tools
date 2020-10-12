@@ -27,7 +27,7 @@ class AccountHolderIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, ge
     template_name = 'housekeeping_book/account_holders/list.html'
     permission_required = 'housekeeping_book.view_accountholder'
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Account holders'
     }
@@ -51,7 +51,7 @@ class AccountHolderCreateView(LoginRequiredMixin, PermissionRequiredMixin, PassR
     success_message = 'Success: account holder was created.'
     success_url = reverse_lazy('account_holder_index')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Create account holder'
     }
@@ -79,7 +79,7 @@ class AccountHolderUpdateView(LoginRequiredMixin, GuardianPermissionRequiredMixi
     success_message = 'Success: Account holder was updated.'
     success_url = reverse_lazy('account_holder_index')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Edit account holder'
     }
@@ -104,7 +104,7 @@ class AccountHolderDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Succe
     error_message = 'Error: Could not delete account holder.'
     success_url = reverse_lazy('account_holder_index')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Delete account holder'
     }
@@ -140,7 +140,7 @@ class CategoryIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic
     template_name = 'housekeeping_book/categories/list.html'
     permission_required = 'housekeeping_book.view_category'
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Categories'
     }
@@ -164,7 +164,7 @@ class CategoryCreateView(LoginRequiredMixin, PermissionRequiredMixin, PassReques
     success_message = 'Success: category was created.'
     success_url = reverse_lazy('category_index')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Create category'
     }
@@ -192,7 +192,7 @@ class CategoryUpdateView(LoginRequiredMixin, GuardianPermissionRequiredMixin, Su
     success_message = 'Success: Category was updated.'
     success_url = reverse_lazy('category_index')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Edit category'
     }
@@ -217,7 +217,7 @@ class CategoryDeleteView(LoginRequiredMixin, GuardianPermissionRequiredMixin, Su
     error_message = 'Error: Could not delete category.'
     success_url = reverse_lazy('category_index')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Delete category'
     }
@@ -253,7 +253,7 @@ class BookingIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.
     template_name = 'housekeeping_book/bookings/list.html'
     permission_required = 'housekeeping_book.view_booking'
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Dynamic bookings'
     }
@@ -278,7 +278,7 @@ class BookingCreateView(LoginRequiredMixin, PermissionRequiredMixin, PassRequest
     success_message = 'Success: Booking was created.'
     success_url = reverse_lazy('booking_new')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Create dynamic booking'
     }
@@ -319,7 +319,7 @@ class BookingUpdateView(LoginRequiredMixin, GuardianPermissionRequiredMixin, Suc
     success_message = 'Success: Dynamic booking was updated.'
     success_url = reverse_lazy('booking_index')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Edit dynamic booking'
     }
@@ -344,7 +344,7 @@ class BookingDeleteView(LoginRequiredMixin, GuardianPermissionRequiredMixin, Suc
     error_message = 'Error: Could not delete dynamic booking.'
     success_url = reverse_lazy('booking_index')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Delete dynamic booking'
     }
@@ -378,7 +378,7 @@ class PeriodicBookingIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, 
     template_name = 'housekeeping_book/periodic_bookings/list.html'
     permission_required = 'housekeeping_book.view_periodicbooking'
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Periodic bookings'
     }
@@ -403,7 +403,7 @@ class PeriodicBookingCreateView(LoginRequiredMixin, PermissionRequiredMixin, Pas
     success_message = 'Success: Periodic booking was created.'
     success_url = reverse_lazy('periodic_booking_index')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Create periodic booking'
     }
@@ -454,7 +454,7 @@ class PeriodicBookingUpdateView(LoginRequiredMixin, GuardianPermissionRequiredMi
     permission_required = 'housekeeping_book.change_periodicbooking'
     success_message = 'Success: Periodic booking was updated.'
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Edit periodic booking'
     }
@@ -482,7 +482,7 @@ class PeriodicBookingDeleteView(LoginRequiredMixin, GuardianPermissionRequiredMi
     error_message = 'Error: Could not delete periodic booking.'
     success_url = reverse_lazy('periodic_booking_index')
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Delete periodic booking'
     }
@@ -528,7 +528,7 @@ class StatisticsCategoryTotalPerMonth(LoginRequiredMixin, generic.TemplateView):
     spread_amount = False
     include_dynamic_bookings = True
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'app_title': 'Housekeeping Book',
         'page_title': 'Statistics'
     }

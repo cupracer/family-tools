@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class TeamtoolsConfig(AppConfig):
+class FamilyToolsConfig(AppConfig):
     name = 'main'

@@ -5,7 +5,7 @@ from django.shortcuts import render
 class IndexView(TemplateView):
     template_name = "main/base.html"
     site = {
-        'name': 'TeamTools',
+        'name': 'FamilyTools',
         'page_title': 'Start'
     }
 
