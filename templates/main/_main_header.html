@@ -23,7 +23,7 @@
                 {% if request.user.is_authenticated %}
                 <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="text-success far fa-user fa-2x"></i>
+                            <i class="text-success far fa-user fa-2x"></i> {% firstof request.user.get_short_name request.user.get_username %}
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <a href="#" class="dropdown-item">
@@ -32,7 +32,6 @@
                                     <img src="{%avatar_url size=128 %}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                                     <div class="media-body">
                                         <h3 class="dropdown-item-title">
-                                                {% firstof request.user.get_short_name request.user.get_username %}
                                             <span class="float-right text-sm text-danger"><i class="fas fa-online"></i></span>
                                         </h3>
                                         <p class="text-sm"><small>{% trans 'Member since' %} :</small></p>
