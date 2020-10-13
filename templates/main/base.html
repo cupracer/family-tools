@@ -49,4 +49,12 @@
     {% endblock %}
 {% endblock %}
 
-{% block nav_footer %}{% endblock %}
+{% block nav_footer %}
+    {{ block.super }}
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+{% endblock %}
