@@ -41,7 +41,7 @@ class BaseBooking(models.Model):
 
 
 class Booking(BaseBooking):
-    parent_identifier = models.CharField(unique=True, null=True, blank=False, max_length=32)
+    parent_identifier = models.CharField(unique=True, null=True, blank=True, max_length=32)
     booking_date = models.DateField('booking date', null=False, blank=False)
 
     def __str__(self):
