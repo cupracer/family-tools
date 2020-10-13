@@ -1,6 +1,7 @@
 from bootstrap_datepicker_plus import DatePickerInput
 from bootstrap_modal_forms.mixins import PopRequestMixin
 from django import forms
+from django.contrib.auth.models import Group
 from django.forms import TextInput, NumberInput
 from django_select2.forms import ModelSelect2Widget
 
@@ -98,6 +99,8 @@ class PeriodicBookingForm(PopRequestMixin, forms.ModelForm):
 
 class UserSelect2Widget(ModelSelect2Widget):
     model = User
+    membersGroup = Group.objects.get(name='members')
+    queryset = User.objects.filter(groups=membersGroup)
     search_fields = [
         'name__icontains'
     ]
