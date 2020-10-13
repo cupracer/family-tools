@@ -16,7 +16,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="datatables" class="table table-bordered table-striped" data-server-side="true" data-ajax="/api/housekeeping_book/categories/?format=datatables">
+              <table id="datatables" class="table table-striped" data-server-side="true" data-ajax="/api/housekeeping_book/categories/?format=datatables">
                 <thead>
                     <tr>
                         <th data-data="id" class="min">ID</th>
@@ -41,6 +41,8 @@
             $('#datatables').DataTable({
                 "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]],
                 "order": [[ 1, "asc" ]],
+                "responsive": true,
+                "scrollX": true,
                 "columns": [
                    { "className": "min col-right", },
                     null,
