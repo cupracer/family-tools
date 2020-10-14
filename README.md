@@ -33,8 +33,9 @@ pip install -r requirements.txt
 ```
 
 ### 6. start web server
+Choose a real secret key and keep it... secret.
 ```shell script
-./manage.py runserver 8000
+SECRET_KEY='<my-secret>' ./manage.py runserver 8000
 ```
 
 ## Run as container
@@ -48,8 +49,10 @@ docker pull docker.pkg.github.com/cupracer/family-tools/family-tools:latest
 
 ### run basic container for non-productive environment
 **Attention:** Please note that you'll lose your database if the container is destroyed (see below for persistent storage)!
+
+Replace `<my-secret>` with a real secret key.
 ```shell script
-docker run -it docker.pkg.github.com/cupracer/family-tools/family-tools:latest
+docker run -it -e SECRET_KEY='<my-secret>' docker.pkg.github.com/cupracer/family-tools/family-tools:latest
 ```
 
 ### limit allowed hosts by setting a container env variable
