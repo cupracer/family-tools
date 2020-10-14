@@ -12,6 +12,6 @@ USER appuser
 WORKDIR /opt/family-tools
 
 RUN pip install -r requirements.txt
-RUN ./manage.py collectstatic
+RUN SECRET_KEY='<my-secret'> ./manage.py collectstatic
 
 CMD ["/bin/sh", "/opt/family-tools/.docker/run.sh"]
