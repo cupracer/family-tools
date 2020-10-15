@@ -11,15 +11,19 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class AccountHolderSerializer(serializers.HyperlinkedModelSerializer):
+    num_bookings = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = AccountHolder
-        fields = ('id', 'name', 'booking_count')
+        fields = ('id', 'name', 'num_bookings')
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
+    num_bookings = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Category
-        fields = ('id', 'name', 'booking_count')
+        fields = ('id', 'name', 'num_bookings')
 
 
 class BookingSerializer(serializers.HyperlinkedModelSerializer):

@@ -1,3 +1,4 @@
+from django.db.models import Count
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_datatables import filters
@@ -7,13 +8,13 @@ from .models import AccountHolder, Category, Booking, PeriodicBooking
 
 
 class AccountHolderViewSet(viewsets.ModelViewSet):
-    queryset = AccountHolder.objects.all()
+    queryset = AccountHolder.objects.all().annotate(num_bookings=Count('booking')+Count('periodicbooking'))
     serializer_class = AccountHolderSerializer
     filter_backends = [filters.DatatablesFilterBackend]
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.all().annotate(num_bookings=Count('booking')+Count('periodicbooking'))
     serializer_class = CategorySerializer
     filter_backends = [filters.DatatablesFilterBackend]
 

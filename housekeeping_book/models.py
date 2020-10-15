@@ -10,16 +10,11 @@ from main.validators import validate_item_name
 class AccountHolder(models.Model):
     name = models.CharField(unique=True, max_length=200, validators=[validate_item_name])
 
-
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ['name']
-
-    @property
-    def booking_count(self):
-        return self.booking_set.filter().count() + self.periodicbooking_set.filter().count()
 
 
 class Category(models.Model):
@@ -31,10 +26,6 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "categories"
         ordering = ['name']
-
-    @property
-    def booking_count(self):
-        return self.booking_set.filter().count() + self.periodicbooking_set.filter().count()
 
 
 class BaseBooking(models.Model):
