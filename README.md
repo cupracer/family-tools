@@ -15,8 +15,8 @@ Use a system-wide interpreter or create a virtual environment
 ### 2. provide a secret key
 Django requires a secret key to work.
 It's not recommended to hard-code it into the project's settings.py file.
-Instead, it should be provided either as an environment variable called "SECRET_KEY" 
-or in a separate file called '.secret_key.txt' within the project's root directory:
+Instead, it should be provided either as an environment variable called `SECRET_KEY` 
+or in a separate file called `.secret_key.txt` within the project's root directory:
 ```shell script
 echo '<my-secret-key>' > .secret_key.txt
 ```
