@@ -12,30 +12,38 @@ Nevertheless, I take the project seriously and try to make it the best tool for 
 ### 1. setup Python
 Use a system-wide interpreter or create a virtual environment
 
-### 2. install requirements
+### 2. provide a secret key
+Django requires a secret key to work.
+It's not recommended to hard-code it into the project's settings.py file.
+Instead, it should be provided either as an environment variable called "SECRET_KEY" 
+or in a separate file called '.secret_key.txt' within the project's root directory:
+```shell script
+echo '<my-secret-key>' > .secret_key.txt
+```
+
+### 3. install requirements
 ```shell script
 pip install -r requirements.txt
 ```
 
-### 3. generate static files
+### 4. generate static files
 ```shell script
 ./manage.py collectstatic
 ```
 
-### 4. initialize database
+### 5. initialize database
 ```shell script
 ./manage.py migrate
 ```
 
-### 5. create admin account
+### 6. create admin account
 ```shell script
 ./manage.py createsuperuser
 ```
 
-### 6. start web server
-Choose a real secret key and keep it... secret.
+### 7. start web server
 ```shell script
-SECRET_KEY='<my-secret>' ./manage.py runserver 8000
+./manage.py runserver 8000
 ```
 
 ## Run as container
@@ -55,7 +63,7 @@ Replace `<my-secret>` with a real secret key.
 docker run -it -e SECRET_KEY='<my-secret>' docker.pkg.github.com/cupracer/family-tools/family-tools:latest
 ```
 
-### limit allowed hosts by setting a container env variable
+### limit allowed hosts by adding a container env variable
 ```shell script
 -e ALLOWED_HOSTS="['some.host.name', 'some.ip']"
 ```

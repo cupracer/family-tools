@@ -1,6 +1,6 @@
 FROM python:3-slim
 
-EXPOSE 8000
+ENV SECRET_KEY="dummy"
 
 RUN useradd -u 999 -m -s /bin/bash -g users appuser
 
@@ -12,6 +12,8 @@ USER appuser
 WORKDIR /opt/family-tools
 
 RUN pip install -r requirements.txt
-RUN SECRET_KEY="dummy-secret" ./manage.py collectstatic
+RUN ./manage.py collectstatic
+
+EXPOSE 8000
 
 CMD ["/bin/sh", "/opt/family-tools/.docker/run.sh"]

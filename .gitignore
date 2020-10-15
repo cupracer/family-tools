@@ -1,4 +1,5 @@
 /.idea
+/.secret_key.txt
 /db.sqlite3
 /static
 !/static/.directory
