@@ -13,13 +13,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class AccountHolderSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AccountHolder
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'booking_count')
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'booking_count')
 
 
 class BookingSerializer(serializers.HyperlinkedModelSerializer):

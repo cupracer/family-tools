@@ -21,6 +21,7 @@
                     <tr>
                         <th data-data="id" class="min">ID</th>
                         <th data-data="name">Name</th>
+                        <th data-data="booking_count" class="min"># bookings</th>
                         <th class="min">&nbsp;</th>
                     </tr>
                 </thead>
@@ -46,6 +47,11 @@
                 "columns": [
                    { "className": "min col-right", },
                     null,
+                    {
+                        "className": "min col-right",
+                        "orderable": false,
+                        "searchable": false,
+                    },
                     {
                         "orderable": false,
                         "searchable": false,
