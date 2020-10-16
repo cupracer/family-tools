@@ -23,7 +23,7 @@
                         {% if request.user.is_staff %}
                             <th data-data="user.username">Username</th>
                         {% endif %}
-                        <th data-data="category.name">Category</th>
+                        <th data-data="category">Category</th>
                         <th data-data="account_holder">Account holder</th>
                         <th data-data="description">Description</th>
                         <th data-data="amount">Amount</th>
@@ -55,7 +55,11 @@
                     {% if request.user.is_staff %}
                         { "className": "min" },
                     {% endif %}
-                    null,
+                    {
+                        render: function (data, type, row) {
+                            return '<a href="/housekeeping_book/bookings/by_category/' + data.id + '/">' + data.name + '</a>';
+                        }
+                    },
                     {
                         render: function (data, type, row) {
                             return '<a href="/housekeeping_book/bookings/by_account_holder/' + data.id + '/">' + data.name + '</a>';

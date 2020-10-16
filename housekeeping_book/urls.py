@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import BookingByAccountHolderJson
+from .views import BookingByAccountHolderJson, BookingByCategoryJson
 
 urlpatterns = [
     path('accountholders/', views.AccountHolderIndex.as_view(), name='account_holder_index'),
@@ -20,6 +20,9 @@ urlpatterns = [
 
     path('bookings/by_account_holder/<int:account_holder_id>/', views.BookingIndex.as_view(), name='booking_by_account_holder_index'),
     path('bookings/by_account_holder/<int:account_holder_id>/json/', BookingByAccountHolderJson.as_view()),
+
+    path('bookings/by_category/<int:category_id>/', views.BookingIndex.as_view(), name='booking_by_category_index'),
+    path('bookings/by_category/<int:category_id>/json/', BookingByCategoryJson.as_view()),
 
     path('periodic_bookings/', views.PeriodicBookingIndex.as_view(), name='periodic_booking_index'),
     path('periodic_bookings/new/', views.PeriodicBookingCreateView.as_view(), name='periodic_booking_new'),

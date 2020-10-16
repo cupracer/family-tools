@@ -14,7 +14,7 @@ from bootstrap_modal_forms.mixins import PassRequestMixin
 from django.contrib import messages
 import simplejson
 from guardian.mixins import PermissionRequiredMixin as GuardianPermissionRequiredMixin
-from guardian.shortcuts import assign_perm, remove_perm
+from guardian.shortcuts import assign_perm
 from rest_framework import generics
 
 from main.models import User
@@ -254,29 +254,38 @@ class BookingIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.
     context_object_name = 'bookings'
     template_name = 'housekeeping_book/bookings/list.html'
     permission_required = 'housekeeping_book.view_booking'
-    site = {
-        'name': 'FamilyTools',
-        'app_title': 'Housekeeping Book',
-        'page_title': 'Dynamic bookings'
-    }
-    nav = {
-        'first_level': 'housekeeping_book',
-        'second_level': 'bookings'
-    }
-    datatables_path = '/api/housekeeping_book/bookings/?format=datatables'
 
     def get(self, request, *args, **kwargs):
+        site = {
+            'name': 'FamilyTools',
+            'app_title': 'Housekeeping Book',
+            'page_title': 'Dynamic bookings'
+        }
+        nav = {
+            'first_level': 'housekeeping_book',
+            'second_level': 'bookings'
+        }
+        datatables_path = '/api/housekeeping_book/bookings/?format=datatables'
+
         context = {
-            'site': self.site,
-            'nav': self.nav,
+            'site': site,
+            'nav': nav,
             'can_add': self.request.user.has_perm('housekeeping_book.add_booking'),
-            'datatables_path': self.datatables_path
+            'datatables_path': datatables_path
         }
 
         if 'account_holder_id' in kwargs:
+            account_holder = AccountHolder.objects.get(id=kwargs['account_holder_id'])
             context['datatables_path'] = '/housekeeping_book/bookings/by_account_holder/' + \
                  str(kwargs['account_holder_id']) + '/json/?format=datatables'
-            context['site']['page_title'] = 'Dynamic bookings (filtered by account holder)'
+            context['site']['page_title'] = 'Dynamic bookings (filtered by account holder "' + account_holder.name + '")'
+
+        elif 'category_id' in kwargs:
+            category = Category.objects.get(id=kwargs['category_id'])
+            context['datatables_path'] = '/housekeeping_book/bookings/by_category/' + \
+                 str(kwargs['category_id']) + '/json/?format=datatables'
+            context['site']['page_title'] = 'Dynamic bookings (filtered by category "' + category.name + '")'
+
         return render(request, self.template_name, context)
 
 
@@ -286,6 +295,14 @@ class BookingByAccountHolderJson(generics.ListAPIView):
     def get_queryset(self):
         account_holder_id = self.kwargs['account_holder_id']
         return Booking.objects.filter(account_holder_id=account_holder_id)
+
+
+class BookingByCategoryJson(generics.ListAPIView):
+    serializer_class = BookingSerializer
+
+    def get_queryset(self):
+        category_id = self.kwargs['category_id']
+        return Booking.objects.filter(category_id=category_id)
 
 
 class BookingCreateView(LoginRequiredMixin, PermissionRequiredMixin, PassRequestMixin, SuccessMessageMixin, generic.CreateView):

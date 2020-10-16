@@ -49,6 +49,9 @@
                     null,
                     {
                         "className": "min col-right",
+                        "render": function (data, type, row) {
+                            return '<a href="/housekeeping_book/bookings/by_category/' + row['id'] + '/">' + data + '</a>';
+                        }
                     },
                     {
                         "orderable": false,
