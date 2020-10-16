@@ -15,10 +15,12 @@ from django.contrib import messages
 import simplejson
 from guardian.mixins import PermissionRequiredMixin as GuardianPermissionRequiredMixin
 from guardian.shortcuts import assign_perm, remove_perm
+from rest_framework import generics
 
 from main.models import User
 from .forms import AccountHolderForm, CategoryForm, BookingForm, PeriodicBookingForm, CategoryTotalPerMonthForm
 from .models import AccountHolder, Category, Booking, PeriodicBooking
+from .serializers import BookingSerializer
 
 
 class AccountHolderIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.TemplateView):
@@ -261,13 +263,29 @@ class BookingIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.
         'first_level': 'housekeeping_book',
         'second_level': 'bookings'
     }
+    datatables_path = '/api/housekeeping_book/bookings/?format=datatables'
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {
+        context = {
             'site': self.site,
             'nav': self.nav,
-            'can_add': self.request.user.has_perm('housekeeping_book.add_booking')
-        })
+            'can_add': self.request.user.has_perm('housekeeping_book.add_booking'),
+            'datatables_path': self.datatables_path
+        }
+
+        if 'account_holder_id' in kwargs:
+            context['datatables_path'] = '/housekeeping_book/bookings/by_account_holder/' + \
+                 str(kwargs['account_holder_id']) + '/json/?format=datatables'
+            context['site']['page_title'] = 'Dynamic bookings (filtered by account holder)'
+        return render(request, self.template_name, context)
+
+
+class BookingByAccountHolderJson(generics.ListAPIView):
+    serializer_class = BookingSerializer
+
+    def get_queryset(self):
+        account_holder_id = self.kwargs['account_holder_id']
+        return Booking.objects.filter(account_holder_id=account_holder_id)
 
 
 class BookingCreateView(LoginRequiredMixin, PermissionRequiredMixin, PassRequestMixin, SuccessMessageMixin, generic.CreateView):
