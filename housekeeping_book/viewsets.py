@@ -1,4 +1,6 @@
-from django.db.models import Count
+from datetime import datetime
+
+from django.db.models import Count, Case, When, Value, BooleanField
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_datatables import filters
@@ -15,7 +17,6 @@ class AccountHolderViewSet(viewsets.ModelViewSet):
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    #queryset = Category.objects.all().annotate(num_bookings=Count('booking'))
     queryset = Category.objects.all().annotate(
         num_bookings=Count('booking', distinct=True) + Count('periodicbooking', distinct=True))
     serializer_class = CategorySerializer
@@ -33,5 +34,11 @@ class RecentResultsSetPagination(PageNumberPagination):
 
 
 class PeriodicBookingsViewSet(viewsets.ModelViewSet):
-    queryset = PeriodicBooking.objects.all()
+    queryset = PeriodicBooking.objects.all().annotate(
+        is_active=Case(
+            When(end_date__lt=datetime.now(),
+                 then=Value(False, output_field=BooleanField())),
+            default=Value(True)
+        ),
+    )
     serializer_class = PeriodicBookingSerializer

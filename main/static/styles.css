@@ -18,3 +18,8 @@ td.col-right, th.col-right {
 th {
     white-space: nowrap;
 }
+
+#datatables_length {
+    float: left;
+    margin-right: 50px;
+}

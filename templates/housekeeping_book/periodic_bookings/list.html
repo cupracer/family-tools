@@ -21,6 +21,7 @@
                         <th data-data="id" class="min">ID</th>
                         <th data-data="start_date">Start</th>
                         <th data-data="end_date">end</th>
+                        <th data-data="is_active" class="min">is active</th>
                         <th data-data="booking_day_of_month">DOM</th>
                         <th data-data="interval">interval</th>
                         {% if request.user.is_staff %}
@@ -46,16 +47,39 @@
 {% block datatable_js %}
 <script type="text/javascript">
         $(document).ready(function () {
-            dataTables =
+            dataTable =
             $('#datatables').DataTable({
                 "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]],
                 "order": [[ 1, "asc" ], [ 2, "asc" ]],
                 "responsive": true,
                 "scrollX": true,
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        text: 'all',
+                        action: function ( e, dt, node, config ) {
+                            dataTable.column(3).search('').draw();
+                            this.active(true);
+                            dataTable.button(1).active(false);
+                        }
+                    },
+                    {
+                        text: 'active',
+                        action: function ( e, dt, node, config ) {
+                            dataTable.column(3).search(1).draw();
+                            this.active(true);
+                            dataTable.button(0).active(false);
+                        }
+                    }
+                ],
                 "columns": [
                     { "className": "min col-right", },
                     { "className": "min col-center", },
                     { "className": "min" },
+                    {
+                        //is_active
+                        "visible": false
+                    },
                     null,
                     null,
                     {% if request.user.is_staff %}
