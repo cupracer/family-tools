@@ -40,9 +40,9 @@ class PeriodicBookingSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer()
     category = CategorySerializer()
     account_holder = AccountHolderSerializer()
-    is_active = serializers.BooleanField(read_only=True)
+    is_current = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = PeriodicBooking
         fields = ('id', 'url', 'user', 'category', 'account_holder', 'description', 'amount',
-                  'start_date', 'end_date', 'interval', 'booking_day_of_month', 'identifier', 'is_active')
+                  'start_date', 'end_date', 'interval', 'booking_day_of_month', 'identifier', 'is_current')

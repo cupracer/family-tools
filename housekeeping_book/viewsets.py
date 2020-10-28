@@ -35,7 +35,7 @@ class RecentResultsSetPagination(PageNumberPagination):
 
 class PeriodicBookingsViewSet(viewsets.ModelViewSet):
     queryset = PeriodicBooking.objects.all().annotate(
-        is_active=Case(
+        is_current=Case(
             When(end_date__lt=datetime.now(),
                  then=Value(False, output_field=BooleanField())),
             default=Value(True)

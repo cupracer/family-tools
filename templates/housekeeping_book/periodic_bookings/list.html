@@ -21,7 +21,7 @@
                         <th data-data="id" class="min">ID</th>
                         <th data-data="start_date">Start</th>
                         <th data-data="end_date">end</th>
-                        <th data-data="is_active" class="min">is active</th>
+                        <th data-data="is_current" class="min">is current</th>
                         <th data-data="booking_day_of_month">DOM</th>
                         <th data-data="interval">interval</th>
                         {% if request.user.is_staff %}
@@ -57,6 +57,9 @@
                 buttons: [
                     {
                         text: 'all',
+                        init: function ( dt, node, config ) {
+                            this.active(true);
+                        },
                         action: function ( e, dt, node, config ) {
                             dataTable.column(3).search('').draw();
                             this.active(true);
@@ -64,7 +67,7 @@
                         }
                     },
                     {
-                        text: 'active',
+                        text: 'current',
                         action: function ( e, dt, node, config ) {
                             dataTable.column(3).search(1).draw();
                             this.active(true);
@@ -77,7 +80,7 @@
                     { "className": "min col-center", },
                     { "className": "min" },
                     {
-                        //is_active
+                        //is_current
                         "visible": false
                     },
                     null,
