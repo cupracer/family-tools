@@ -480,8 +480,6 @@ class PeriodicBookingCreateView(LoginRequiredMixin, PermissionRequiredMixin, Pas
         return HttpResponseRedirect(self.get_success_url())
 
 
-
-
 class PeriodicBookingUpdateView(LoginRequiredMixin, GuardianPermissionRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     model = PeriodicBooking
     form_class = PeriodicBookingForm
