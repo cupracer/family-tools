@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 
+from django.db.models.functions import Lower
 from guardian.models import UserObjectPermissionBase, GroupObjectPermissionBase
 
 from main.models import User
@@ -14,7 +15,7 @@ class AccountHolder(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = [Lower('name')]
 
 
 class Category(models.Model):
@@ -25,7 +26,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "categories"
-        ordering = ['name']
+        ordering = [Lower('name')]
 
 
 class BaseBooking(models.Model):

@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.functions import Lower
+
 from main.validators import validate_item_name
 
 
@@ -10,7 +12,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "categories"
-        ordering = ['name']
+        ordering = [Lower('name')]
 
 
 class Brand(models.Model):
@@ -20,7 +22,7 @@ class Brand(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = [Lower('name')]
 
 
 class Unit(models.Model):
@@ -30,7 +32,7 @@ class Unit(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['name']
+        ordering = [Lower('name')]
 
 
 class Supply(models.Model):
