@@ -39,6 +39,12 @@
                 <i class="nav-icon fas fa-chart-line"></i> Statistics
             </a>
         </li>
+        <li class="nav-header">SUPPLIES</li>
+        <li class="nav-item">
+            <a href="{% url 'supply_item_index' %}" class="nav-link {% if nav.second_level == 'supply_items' %}active{% endif %}">
+                <i class="nav-icon fas fa-money-check-alt"></i> Supply items
+            </a>
+        </li>
 
         <li class="nav-header font-weight-bold">SETTINGS</li>
         <li class="nav-header">HOUSEKEEPING BOOK</li>
