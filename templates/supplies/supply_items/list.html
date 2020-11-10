@@ -44,21 +44,25 @@
         $(document).ready(function () {
             dataTables =
             $('#datatables').DataTable({
-                "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]],
-                "order": [[ 0, "asc" ]],
+                "lengthMenu": [[100, 250, 500, -1], [100, 250, 500, "All"]],
+                "order": [[ 1, "asc" ], [ 7, "asc" ]],
                 "responsive": true,
                 "scrollX": true,
                 "columns": [
                     { "className": "min col-right", },
                     null,
-                    null,
-                    null,
-                    null,
-                    null,
                     {
                         "defaultContent": '-'
                     },
+                    null,
+                    { "className": "min col-right", },
+                    { "className": "min", },
                     {
+                        "className": "min col-center",
+                        "defaultContent": '-'
+                    },
+                    {
+                        "className": "min col-center",
                         "defaultContent": '-'
                     },
                     {
