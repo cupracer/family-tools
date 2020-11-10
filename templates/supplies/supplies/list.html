@@ -1,0 +1,77 @@
+{% extends 'main/base-datatables.html' %}
+
+{% load adminlte_helpers i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title p-2">{{ site.page_title }}</h3>
+              {% if can_add %}
+                <a class="btn btn-outline-primary float-right" href="{% url 'supply_new' %}">Add...</a>
+              {% endif %}
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="datatables" class="table table-striped" data-server-side="true" data-ajax="/api/supplies/supplies/?format=datatables">
+                <thead>
+                    <tr>
+                        <th data-data="id" class="min">ID</th>
+                        <th data-data="name">Name</th>
+                        <th data-data="brand.name">Brand</th>
+                        <th data-data="category.name">Category</th>
+                        <th data-data="amount">Amount</th>
+                        <th data-data="unit.name">Unit</th>
+                        <th class="min">&nbsp;</th>
+                    </tr>
+                </thead>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+{% endblock %}
+
+{% block datatable_js %}
+<script type="text/javascript">
+        $(document).ready(function () {
+            dataTables =
+            $('#datatables').DataTable({
+                "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]],
+                "order": [[ 1, "asc" ]],
+                "responsive": true,
+                "scrollX": true,
+                "columns": [
+                   { "className": "min col-right", },
+                    null,
+                    {
+                        "defaultContent": '-'
+                    },
+                    null,
+                    { "className": "min col-right", },
+                    {
+                        "className": "min col-center",
+                    },
+                    {
+                        "orderable": false,
+                        "searchable": false,
+                        "className": "min col-center",
+                        "render": function (data, type, row) {
+                            let rowId = row['id'];
+                            let links = '<div class="btn-group" role="group">';
+                            links+= '<a class="btn btn-xs btn-outline-primary" href="/supplies/supplies/' + rowId + '/edit"><i class="fa fa-fw fa-edit"></i></a>'
+                            links+= '<a class="btn btn-xs btn-outline-danger" href="/supplies/supplies/' + rowId + '/delete"><i class="fa fa-fw fa-trash"></i></a>'
+                            links+= '</div>';
+                            return links;
+                        }
+                    },
+                ],
+            });
+        });
+    </script>
+{% endblock %}
