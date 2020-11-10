@@ -22,7 +22,11 @@ class AccountHolderForm(PopRequestMixin, forms.ModelForm):
         fields = ('name',)
         widgets = {
             'name': TextInput(
-                attrs={'class': 'form-control'}),
+                attrs={
+                    'class': 'form-control',
+                    'autofocus': 'autofocus',
+                }
+            ),
         }
 
 
@@ -39,7 +43,11 @@ class CategoryForm(PopRequestMixin, forms.ModelForm):
         fields = ('name',)
         widgets = {
             'name': TextInput(
-                attrs={'class': 'form-control'}),
+                attrs={
+                    'class': 'form-control',
+                    'autofocus': 'autofocus',
+                }
+            ),
         }
 
 

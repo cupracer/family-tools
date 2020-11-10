@@ -19,7 +19,11 @@ class CategoryForm(PopRequestMixin, forms.ModelForm):
         fields = ('name',)
         widgets = {
             'name': TextInput(
-                attrs={'class': 'form-control'}),
+                attrs={
+                    'class': 'form-control',
+                    'autofocus': 'autofocus',
+                }
+            ),
         }
 
 
@@ -36,7 +40,11 @@ class BrandForm(PopRequestMixin, forms.ModelForm):
         fields = ('name',)
         widgets = {
             'name': TextInput(
-                attrs={'class': 'form-control'}),
+                attrs={
+                    'class': 'form-control',
+                    'autofocus': 'autofocus',
+                }
+            ),
         }
 
 
@@ -52,7 +60,11 @@ class SupplyForm(PopRequestMixin, forms.ModelForm):
         model = Supply
         fields = ('name', 'category', 'brand', 'unit', 'amount')
         widgets = {
-            'name': TextInput(attrs={'class': 'form-control'}),
+            'name': TextInput(attrs={
+                    'class': 'form-control',
+                    'autofocus': 'autofocus',
+                }
+            ),
             'category': CategorySelect2Widget(
                 attrs={
                     'class': 'form-control',
