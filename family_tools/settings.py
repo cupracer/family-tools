@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'main.apps.FamilyToolsConfig',
     'guardian',
     'housekeeping_book',
+    'supplies',
 ]
 
 MIDDLEWARE = [

@@ -19,7 +19,11 @@
                 <thead>
                     <tr>
                         <th data-data="id" class="min">ID</th>
-                        <th data-data="supply">Supply</th>
+                        <th data-data="supply.name">Name</th>
+                        <th data-data="supply.brand.name">Brand</th>
+                        <th data-data="supply.category.name">Category</th>
+                        <th data-data="supply.amount">Amount</th>
+                        <th data-data="supply.unit.name">Unit</th>
                         <th data-data="purchase_date">Purchase</th>
                         <th data-data="best_before_date">Best before</th>
                         <th class="min">&nbsp;</th>
@@ -41,11 +45,15 @@
             dataTables =
             $('#datatables').DataTable({
                 "lengthMenu": [[10, 50, 100, -1], [10, 50, 100, "All"]],
-                "order": [[ 1, "asc" ]],
+                "order": [[ 0, "asc" ]],
                 "responsive": true,
                 "scrollX": true,
                 "columns": [
                     { "className": "min col-right", },
+                    null,
+                    null,
+                    null,
+                    null,
                     null,
                     {
                         "defaultContent": '-'

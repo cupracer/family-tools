@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('api/', include('main.routers')),
     path('select2/', include('django_select2.urls')),
+
     path('housekeeping_book/', include('housekeeping_book.urls')),
-    path('api/housekeeping_book/', include('housekeeping_book.routers')),
+    path('supplies/', include('supplies.urls')),
 ]
