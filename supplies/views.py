@@ -11,8 +11,8 @@ from bootstrap_modal_forms.mixins import PassRequestMixin
 from django.contrib import messages
 from guardian.mixins import PermissionRequiredMixin as GuardianPermissionRequiredMixin
 
-from .forms import BrandForm, CategoryForm, SupplyForm, SupplyItemForm, SupplyItemCreateForm
-from .models import Brand, Category, Supply, SupplyItem
+from .forms import BrandForm, CategoryForm, SupplyForm, SupplyItemForm, SupplyItemCreateForm, PackagingForm
+from .models import Brand, Category, Supply, SupplyItem, Packaging
 
 
 class CategoryIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.TemplateView):
@@ -218,6 +218,119 @@ class BrandDeleteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessag
     nav = {
         'first_level': 'supplies',
         'second_level': 'brands'
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['site'] = self.site
+        context['nav'] = self.nav
+        return context
+
+    def get_error_message(self, cleaned_data):
+        return self.error_message % cleaned_data
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        try:
+            self.object.delete()
+            messages.success(self.request, self.success_message)
+            return HttpResponseRedirect(success_url)
+        except models.ProtectedError:
+            messages.error(self.request, self.error_message + ' (still in use)')
+            return HttpResponseRedirect(success_url)
+
+
+class PackagingIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.TemplateView):
+    model = Packaging
+    context_object_name = 'packagings'
+    template_name = 'supplies/packagings/list.html'
+    permission_required = 'supplies.view_packaging'
+    site = {
+        'name': 'FamilyTools',
+        'app_title': 'Supplies',
+        'page_title': 'Packagings'
+    }
+    nav = {
+        'first_level': 'supplies',
+        'second_level': 'packagings'
+    }
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {
+            'site': self.site,
+            'nav': self.nav,
+            'can_add': self.request.user.has_perm('supplies.add_packaging')
+        })
+
+
+class PackagingCreateView(LoginRequiredMixin, PermissionRequiredMixin, PassRequestMixin, SuccessMessageMixin, generic.CreateView):
+    template_name = 'supplies/packagings/new.html'
+    form_class = PackagingForm
+    permission_required = 'supplies.add_packaging'
+    success_message = 'Success: packaging was created.'
+    success_url = reverse_lazy('packaging_index')
+    site = {
+        'name': 'FamilyTools',
+        'app_title': 'Supplies',
+        'page_title': 'Create packaging'
+    }
+    nav = {
+        'first_level': 'supplies',
+        'second_level': 'packagings'
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['site'] = self.site
+        context['nav'] = self.nav
+        return context
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class PackagingUpdateView(LoginRequiredMixin, GuardianPermissionRequiredMixin, SuccessMessageMixin, generic.UpdateView):
+    model = Packaging
+    form_class = PackagingForm
+    template_name = 'supplies/packagings/edit.html'
+    permission_required = 'supplies.change_packaging'
+    success_message = 'Success: packaging was updated.'
+    success_url = reverse_lazy('packaging_index')
+    site = {
+        'name': 'FamilyTools',
+        'app_title': 'Supplies',
+        'page_title': 'Edit packaging'
+    }
+    nav = {
+        'first_level': 'supplies',
+        'second_level': 'packagings'
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['site'] = self.site
+        context['nav'] = self.nav
+        return context
+
+
+class PackagingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, generic.DeleteView):
+    model = Packaging
+    form_class = PackagingForm
+    template_name = 'supplies/packagings/delete.html'
+    permission_required = 'supplies.delete_packaging'
+    success_message = 'Success: packaging was deleted.'
+    error_message = 'Error: Could not delete packaging.'
+    success_url = reverse_lazy('packaging_index')
+    site = {
+        'name': 'FamilyTools',
+        'app_title': 'Supplies',
+        'page_title': 'Delete packaging'
+    }
+    nav = {
+        'first_level': 'supplies',
+        'second_level': 'packagings'
     }
 
     def get_context_data(self, **kwargs):

@@ -12,6 +12,11 @@ urlpatterns = [
     path('brands/<int:pk>/edit/', views.BrandUpdateView.as_view(), name='brand_edit'),
     path('brands/<int:pk>/delete/', views.BrandDeleteView.as_view(), name='brand_delete'),
 
+    path('packagings/', views.PackagingIndex.as_view(), name='packaging_index'),
+    path('packagings/new/', views.PackagingCreateView.as_view(), name='packaging_new'),
+    path('packagings/<int:pk>/edit/', views.PackagingUpdateView.as_view(), name='packaging_edit'),
+    path('packagings/<int:pk>/delete/', views.PackagingDeleteView.as_view(), name='packaging_delete'),
+
     path('supplies/', views.SupplyIndex.as_view(), name='supply_index'),
     path('supplies/new/', views.SupplyCreateView.as_view(), name='supply_new'),
     path('supplies/<int:pk>/edit/', views.SupplyUpdateView.as_view(), name='supply_edit'),

@@ -13,8 +13,8 @@
             <!-- /.card-header -->
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-4">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
                         <div class="box">
                             <div class="box-body">
                                 <form method="POST" class="post-form">
@@ -24,7 +24,7 @@
                                     {{ form.source }}
 
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-10">
                                             <div class="form-group">
                                                 <label>{{ form.name.label_tag }}</label>
                                                 {{ form.name.errors }}
@@ -32,10 +32,18 @@
                                                 <small id="name_help" class="form-text text-muted">Name</small>
                                             </div>
                                         </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>{{ form.bio_label.label_tag }}</label>
+                                                {{ form.bio_label.errors }}
+                                                {{ form.bio_label }}
+                                                <small id="bio_label_help" class="form-text text-muted">Bio</small>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>{{ form.brand.label_tag }}</label>
                                                 {{ form.brand.errors }}
@@ -43,10 +51,7 @@
                                                 <small id="brand_help" class="form-text text-muted">Brand</small>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>{{ form.category.label_tag }}</label>
                                                 {{ form.category.errors }}
@@ -57,7 +62,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-9">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>{{ form.amount.label_tag }}</label>
                                                 {{ form.amount.errors }}
@@ -65,12 +70,31 @@
                                                 <small id="amount_help" class="form-text text-muted">Amount</small>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>{{ form.unit.label_tag }}</label>
                                                 {{ form.unit.errors }}
                                                 {{ form.unit }}
                                                 <small id="unit_help" class="form-text text-muted">Unit</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>{{ form.packaging.label_tag }}</label>
+                                                {{ form.packaging.errors }}
+                                                {{ form.packaging }}
+                                                <small id="packaging_help" class="form-text text-muted">Packaging</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>{{ form.min_count.label_tag }}</label>
+                                                {{ form.min_count.errors }}
+                                                {{ form.min_count }}
+                                                <small id="min_count_help" class="form-text text-muted">warn when it is running low</small>
                                             </div>
                                         </div>
                                     </div>
@@ -87,7 +111,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-3"></div>
                 </div>
             </div>
             <!-- /.card-body -->

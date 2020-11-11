@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Brand, Supply, Unit, SupplyItem
+from .models import Category, Brand, Supply, Unit, SupplyItem, Packaging
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
@@ -20,14 +20,21 @@ class UnitSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'name')
 
 
+class PackagingSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Packaging
+        fields = ('id', 'name')
+
+
 class SupplySerializer(serializers.HyperlinkedModelSerializer):
     category = CategorySerializer()
     brand = BrandSerializer()
     unit = UnitSerializer()
+    packaging = PackagingSerializer()
 
     class Meta:
         model = Supply
-        fields = ('id', 'name', 'category', 'brand', 'unit', 'amount')
+        fields = ('id', 'name', 'category', 'brand', 'unit', 'amount', 'bio_label', 'packaging', 'min_count')
 
 
 class SupplyItemSerializer(serializers.HyperlinkedModelSerializer):

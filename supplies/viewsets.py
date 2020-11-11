@@ -1,8 +1,9 @@
 from rest_framework import viewsets
 from rest_framework_datatables import filters
 
-from .serializers import CategorySerializer, BrandSerializer, SupplySerializer, UnitSerializer, SupplyItemSerializer
-from .models import Category, Brand, Supply, Unit, SupplyItem
+from .serializers import CategorySerializer, BrandSerializer, SupplySerializer, UnitSerializer, SupplyItemSerializer, \
+    PackagingSerializer
+from .models import Category, Brand, Supply, Unit, SupplyItem, Packaging
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -20,6 +21,12 @@ class BrandViewSet(viewsets.ModelViewSet):
 class UnitViewSet(viewsets.ModelViewSet):
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
+    filter_backends = [filters.DatatablesFilterBackend]
+
+
+class PackagingViewSet(viewsets.ModelViewSet):
+    queryset = Packaging.objects.all()
+    serializer_class = PackagingSerializer
     filter_backends = [filters.DatatablesFilterBackend]
 
 

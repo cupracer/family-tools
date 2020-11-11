@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+
+{% load adminlte_helpers i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">{{ site.page_title }}</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="box">
+                            <div class="box-body">
+                                <form method="POST" class="post-form">
+                                    {% csrf_token %}
+                                    {{ form.non_field_errors }}
+                                    {{ form.source.errors }}
+                                    {{ form.source }}
+
+                                    <div class="form-group">
+                                        <label>{{ form.name.label_tag }}</label>
+                                        {{ form.name.errors }}
+                                        {{ form.name }}
+                                        <small id="name_help" class="form-text text-muted">Packaging name</small>
+                                    </div>
+
+                                    <div class="float-right">
+                                        <a class="btn btn-default" href="{% url 'packaging_index' %}">Cancel</a>
+                                        <button type="submit" class="save btn btn-primary pull-right">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+{% endblock %}

@@ -35,12 +35,25 @@ class Unit(models.Model):
         ordering = [Lower('name')]
 
 
+class Packaging(models.Model):
+    name = models.CharField(unique=True, max_length=100, validators=[validate_item_name])
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = [Lower('name')]
+
+
 class Supply(models.Model):
     name = models.CharField(null=True, blank=True, max_length=500)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True, blank=False)
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True, blank=True)
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT, null=False, blank=False)
     amount = models.IntegerField()
+    bio_label = models.BooleanField('Bio', default=False)
+    packaging = models.ForeignKey(Packaging, on_delete=models.PROTECT, null=True, blank=True)
+    min_count = models.IntegerField(null=True, blank=True, default=None)
 
     def __str__(self):
         custom = self.name
@@ -51,7 +64,7 @@ class Supply(models.Model):
         return custom
 
     class Meta:
-        unique_together = ('name', 'category', 'brand', 'unit', 'amount')
+        unique_together = ('name', 'category', 'brand', 'unit', 'amount', 'packaging')
 
 
 class SupplyItem(models.Model):

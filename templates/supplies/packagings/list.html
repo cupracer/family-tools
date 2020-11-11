@@ -10,23 +10,16 @@
             <div class="card-header">
               <h3 class="card-title p-2">{{ site.page_title }}</h3>
               {% if can_add %}
-                <a class="btn btn-outline-primary float-right" href="{% url 'supply_new' %}">Add...</a>
+                <a class="btn btn-outline-primary float-right" href="{% url 'packaging_new' %}">Add...</a>
               {% endif %}
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="datatables" class="table table-striped" data-server-side="true" data-ajax="/api/supplies/supplies/?format=datatables">
+              <table id="datatables" class="table table-striped" data-server-side="true" data-ajax="/api/supplies/packagings/?format=datatables">
                 <thead>
                     <tr>
                         <th data-data="id" class="min">ID</th>
                         <th data-data="name">Name</th>
-                        <th data-data="bio_label">Bio</th>
-                        <th data-data="brand.name">Brand</th>
-                        <th data-data="category.name">Category</th>
-                        <th data-data="packaging.name">Packaging</th>
-                        <th data-data="amount">Amount</th>
-                        <th data-data="unit.name">Unit</th>
-                        <th data-data="min_count">#min</th>
                         <th class="min">&nbsp;</th>
                     </tr>
                 </thead>
@@ -53,33 +46,14 @@
                    { "className": "min col-right", },
                     null,
                     {
-                        "className": "min col-center",
-                    },
-                    {
-                        "defaultContent": '-'
-                    },
-                    null,
-                    {
-                        "className": "min",
-                        "defaultContent": '-'
-                    },
-                    { "className": "min col-right", },
-                    {
-                        "className": "min col-center",
-                    },
-                    {
-                        "className": "min col-center",
-                        "defaultContent": '-'
-                    },
-                    {
                         "orderable": false,
                         "searchable": false,
                         "className": "min col-center",
                         "render": function (data, type, row) {
                             let rowId = row['id'];
                             let links = '<div class="btn-group" role="group">';
-                            links+= '<a class="btn btn-xs btn-outline-primary" href="/supplies/supplies/' + rowId + '/edit"><i class="fa fa-fw fa-edit"></i></a>'
-                            links+= '<a class="btn btn-xs btn-outline-danger" href="/supplies/supplies/' + rowId + '/delete"><i class="fa fa-fw fa-trash"></i></a>'
+                            links+= '<a class="btn btn-xs btn-outline-primary" href="/supplies/packagings/' + rowId + '/edit"><i class="fa fa-fw fa-edit"></i></a>'
+                            links+= '<a class="btn btn-xs btn-outline-danger" href="/supplies/packagings/' + rowId + '/delete"><i class="fa fa-fw fa-trash"></i></a>'
                             links+= '</div>';
                             return links;
                         }

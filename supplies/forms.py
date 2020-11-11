@@ -1,9 +1,9 @@
 from bootstrap_datepicker_plus import DatePickerInput
 from bootstrap_modal_forms.mixins import PopRequestMixin
 from django import forms
-from django.forms import TextInput, NumberInput
+from django.forms import TextInput, NumberInput, CheckboxInput
 from django_select2.forms import ModelSelect2Widget
-from .models import Category, Brand, Supply, Unit, SupplyItem
+from .models import Category, Brand, Supply, Unit, SupplyItem, Packaging
 
 
 class CategorySelect2Widget(ModelSelect2Widget):
@@ -48,6 +48,27 @@ class BrandForm(PopRequestMixin, forms.ModelForm):
         }
 
 
+class PackagingSelect2Widget(ModelSelect2Widget):
+    model = Packaging
+    search_fields = [
+        'name__istartswith'
+    ]
+
+
+class PackagingForm(PopRequestMixin, forms.ModelForm):
+    class Meta:
+        model = Packaging
+        fields = ('name',)
+        widgets = {
+            'name': TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'autofocus': 'autofocus',
+                }
+            ),
+        }
+
+
 class UnitSelect2Widget(ModelSelect2Widget):
     model = Unit
     search_fields = [
@@ -58,7 +79,7 @@ class UnitSelect2Widget(ModelSelect2Widget):
 class SupplyForm(PopRequestMixin, forms.ModelForm):
     class Meta:
         model = Supply
-        fields = ('name', 'category', 'brand', 'unit', 'amount')
+        fields = ('name', 'category', 'brand', 'unit', 'amount', 'packaging', 'bio_label', 'min_count')
         widgets = {
             'name': TextInput(attrs={
                     'class': 'form-control',
@@ -83,7 +104,27 @@ class SupplyForm(PopRequestMixin, forms.ModelForm):
                     'data-minimum-input-length': 0,
                 }
             ),
-            'amount': NumberInput(attrs={'class': 'form-control'}),
+            'amount': NumberInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+            'packaging': PackagingSelect2Widget(
+                attrs={
+                    'class': 'form-control',
+                    'data-minimum-input-length': 0,
+                }
+            ),
+            'bio_label': CheckboxInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'min_count': NumberInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
         }
 
 
