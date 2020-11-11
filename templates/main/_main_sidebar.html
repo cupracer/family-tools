@@ -41,6 +41,11 @@
         </li>
         <li class="nav-header">SUPPLIES</li>
         <li class="nav-item">
+            <a href="{% url 'supply_index' %}" class="nav-link {% if nav.first_level == 'supplies' and nav.second_level == 'supplies' %}active{% endif %}">
+                <i class="nav-icon fas fa-shopping-cart"></i> Supplies
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="{% url 'supply_item_index' %}" class="nav-link {% if nav.second_level == 'supply_items' %}active{% endif %}">
                 <i class="nav-icon fas fa-drumstick-bite"></i> Supply items
             </a>
@@ -72,11 +77,6 @@
         <li class="nav-item">
             <a href="{% url 'packaging_index' %}" class="nav-link {% if nav.first_level == 'supplies' and nav.second_level == 'packagings' %}active{% endif %}">
                 <i class="nav-icon fas fa-box-open"></i> Packagings
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'supply_index' %}" class="nav-link {% if nav.first_level == 'supplies' and nav.second_level == 'supplies' %}active{% endif %}">
-                <i class="nav-icon fas fa-shopping-cart"></i> Supplies
             </a>
         </li>
 {#        <li class="nav-item">#}
