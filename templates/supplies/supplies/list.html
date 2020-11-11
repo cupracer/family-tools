@@ -73,7 +73,10 @@
                     },
                     {
                         "className": "min col-center",
-                        "defaultContent": '-'
+                        "defaultContent": '-',
+                        "render": function (data, type, row) {
+                            return '<a href="/supplies/supply_items/by_supply/' + row['id'] + '/">' + data + '</a>';
+                        }
                     },
                     {
                         "className": "min col-center",

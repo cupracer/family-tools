@@ -28,9 +28,9 @@ class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
 
 
-class RecentResultsSetPagination(PageNumberPagination):
-    page_size = 5
-    page_size_query_param = 'page_size'
+# class RecentResultsSetPagination(PageNumberPagination):
+#     page_size = 5
+#     page_size_query_param = 'page_size'
 
 
 class PeriodicBookingsViewSet(viewsets.ModelViewSet):

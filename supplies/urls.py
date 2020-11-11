@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import SupplyItemBySupplyJson
 
 urlpatterns = [
     path('categories/', views.CategoryIndex.as_view(), name='supplies_category_index'),
@@ -29,5 +30,6 @@ urlpatterns = [
     path('supply_items/<int:pk>/delete/', views.SupplyItemDeleteView.as_view(), name='supply_item_delete'),
     path('supply_items/<int:pk>/clone/', views.SupplyItemCloneView.as_view(), name='supply_item_clone'),
 
-    # path('bookings/by_category/<int:category_id>/', views.BookingIndex.as_view(), name='booking_by_category_index'),
+    path('supply_items/by_supply/<int:supply_id>/', views.SupplyItemIndex.as_view()),
+    path('supply_items/by_supply/<int:supply_id>/json/', SupplyItemBySupplyJson.as_view()),
 ]

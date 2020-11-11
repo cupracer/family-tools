@@ -13,11 +13,14 @@ from django.views.generic.detail import BaseDetailView
 from guardian.mixins import PermissionRequiredMixin as GuardianPermissionRequiredMixin
 from django.http import JsonResponse
 import todoist
+from rest_framework.response import Response
 from todoist.api import SyncError
+from rest_framework import generics
 
 from family_tools import settings
 from .forms import BrandForm, CategoryForm, SupplyForm, SupplyItemForm, SupplyItemCreateForm, PackagingForm
 from .models import Brand, Category, Supply, SupplyItem, Packaging
+from .serializers import SupplyItemSerializer
 
 
 class CategoryIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.TemplateView):
@@ -521,22 +524,49 @@ class SupplyItemIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, gener
     context_object_name = 'supply_items'
     template_name = 'supplies/supply_items/list.html'
     permission_required = 'supplies.view_supplyitem'
-    site = {
-        'name': 'FamilyTools',
-        'app_title': 'Supplies',
-        'page_title': 'Supply items'
-    }
-    nav = {
-        'first_level': 'supplies',
-        'second_level': 'supply_items'
-    }
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {
-            'site': self.site,
-            'nav': self.nav,
-            'can_add': self.request.user.has_perm('supplies.add_supplyitem')
-        })
+        site = {
+            'name': 'FamilyTools',
+            'app_title': 'Supplies',
+            'page_title': 'Supply items'
+        }
+        nav = {
+            'first_level': 'supplies',
+            'second_level': 'supply_items'
+        }
+        datatables_path = '/api/supplies/supply_items/?format=datatables'
+
+        context = {
+            'site': site,
+            'nav': nav,
+            'can_add': self.request.user.has_perm('supplies.add_supplyitem'),
+            'datatables_path': datatables_path
+        }
+
+        if 'supply_id' in kwargs:
+            supply = Supply.objects.get(id=kwargs['supply_id'])
+            context['datatables_path'] = '/supplies/supply_items/by_supply/' + \
+                 str(kwargs['supply_id']) + '/json/?format=datatables'
+            context['site']['page_title'] = 'Supply items (filtered by supply "' + supply.name + '")'
+
+        return render(request, self.template_name, context)
+
+
+# I wasted several hours for this sh*tty class!
+# Without that get() method and using "many=True" the serializer returned an empty result only.
+# I still don't understand why this all is needed, because "housekeeping_book/views.py" doesn't need it. :-(
+class SupplyItemBySupplyJson(generics.ListAPIView):
+    serializer_class = SupplyItemSerializer()
+
+    def get_queryset(self):
+        supply_id = self.kwargs['supply_id']
+        return SupplyItem.objects.filter(supply_id=supply_id)
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = SupplyItemSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class SupplyItemCreateView(LoginRequiredMixin, PermissionRequiredMixin, PassRequestMixin, SuccessMessageMixin, generic.CreateView):
