@@ -53,8 +53,8 @@
                         "render": function (data, type, row) {
                             let rowId = row['id'];
                             let links = '<div class="btn-group" role="group">';
-                            links+= '<a class="btn btn-xs btn-outline-primary" href="/supplies/categories/' + rowId + '/edit"><i class="fa fa-fw fa-edit"></i></a>'
-                            links+= '<a class="btn btn-xs btn-outline-danger" href="/supplies/categories/' + rowId + '/delete"><i class="fa fa-fw fa-trash"></i></a>'
+                            links+= '<a class="btn btn-xs" href="/supplies/categories/' + rowId + '/edit"><i class="fa fa-fw fa-edit text-primary"></i></a>'
+                            links+= '<a class="btn btn-xs" href="/supplies/categories/' + rowId + '/delete"><i class="fa fa-fw fa-trash text-danger"></i></a>'
                             links+= '</div>';
                             return links;
                         }
