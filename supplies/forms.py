@@ -9,7 +9,7 @@ from .models import Category, Brand, Supply, Unit, SupplyItem, Packaging
 class CategorySelect2Widget(ModelSelect2Widget):
     model = Category
     search_fields = [
-        'name__istartswith'
+        'name__icontains'
     ]
 
 
@@ -30,7 +30,7 @@ class CategoryForm(PopRequestMixin, forms.ModelForm):
 class BrandSelect2Widget(ModelSelect2Widget):
     model = Category
     search_fields = [
-        'name__istartswith'
+        'name__icontains'
     ]
 
 
@@ -51,7 +51,7 @@ class BrandForm(PopRequestMixin, forms.ModelForm):
 class PackagingSelect2Widget(ModelSelect2Widget):
     model = Packaging
     search_fields = [
-        'name__istartswith'
+        'name__icontains'
     ]
 
 
@@ -72,7 +72,7 @@ class PackagingForm(PopRequestMixin, forms.ModelForm):
 class UnitSelect2Widget(ModelSelect2Widget):
     model = Unit
     search_fields = [
-        'name__istartswith'
+        'name__icontains'
     ]
 
 
@@ -131,7 +131,8 @@ class SupplyForm(PopRequestMixin, forms.ModelForm):
 class SupplySelect2Widget(ModelSelect2Widget):
     model = Supply
     search_fields = [
-        'name__icontains'
+        'name__icontains',
+        'brand__name__icontains'
     ]
 
 
