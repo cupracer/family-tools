@@ -13,3 +13,4 @@ djangorestframework-datatables==0.5.2
 python-dateutil==2.8.1
 simplejson==3.17.2
 djangorestframework-guardian==0.3.0
+todoist-python==8.1.2
