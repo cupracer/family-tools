@@ -7,7 +7,8 @@ from main.models import User
 
 
 class GuardedUserAdmin(GuardedModelAdminMixin, UserAdmin):
-    pass
+    fieldsets = UserAdmin.fieldsets
+    fieldsets[1][1]['fields'] = ('first_name', 'last_name', 'email', 'todoist_api_key')
 
 
 class GuardedGroupAdmin(GuardedModelAdminMixin, GroupAdmin):

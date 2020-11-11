@@ -127,6 +127,7 @@
                         if(data.status === "success") {
                             toastr["success"]("added to Todoist", data.message);
                         }else if(data.status === "error") {
+                            toastr.options.timeOut = "5000"
                             toastr["error"](data.message, "error occurred");
                         }
                         button.prop('disabled', false);

@@ -167,11 +167,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 50,
 }
 
-TODOIST_API_KEY = ''
-
-if 'TODOIST_API_KEY' in os.environ:
-    TODOIST_API_KEY = os.environ['TODOIST_API_KEY']
-
 TODOIST_PROJECT_ID = ''
 
 if 'TODOIST_PROJECT_ID' in os.environ:

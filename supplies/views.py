@@ -481,7 +481,10 @@ class SupplyAddToTodoistView(LoginRequiredMixin, PermissionRequiredMixin, BaseDe
         context = self.get_context_data(object=self.object)
 
         try:
-            api = todoist.TodoistAPI(settings.TODOIST_API_KEY)
+            if not self.request.user.todoist_api_key:
+                raise Exception('Todoist API key is missing.')
+
+            api = todoist.TodoistAPI(self.request.user.todoist_api_key)
             item = api.items.add(self.object.name, project_id=settings.TODOIST_PROJECT_ID)
             item.move(section_id=settings.TODOIST_SECTION_ID)
             api.commit()
@@ -494,6 +497,16 @@ class SupplyAddToTodoistView(LoginRequiredMixin, PermissionRequiredMixin, BaseDe
             return JsonResponse({
                 "status": "error",
                 "message": "sync error"
+            })
+        except TypeError:
+            return JsonResponse({
+                "status": "error",
+                "message": "type error"
+            })
+        except Exception as inst:
+            return JsonResponse({
+                "status": "error",
+                "message": inst.args
             })
 
         return JsonResponse({
