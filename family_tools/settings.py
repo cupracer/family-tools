@@ -166,3 +166,18 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework_datatables.pagination.DatatablesPageNumberPagination',
     'PAGE_SIZE': 50,
 }
+
+TODOIST_API_KEY = ''
+
+if 'TODOIST_API_KEY' in os.environ:
+    TODOIST_API_KEY = os.environ['TODOIST_API_KEY']
+
+TODOIST_PROJECT_ID = ''
+
+if 'TODOIST_PROJECT_ID' in os.environ:
+    TODOIST_PROJECT_ID = os.environ['TODOIST_PROJECT_ID']
+
+TODOIST_SECTION_ID = ''
+
+if 'TODOIST_SECTION_ID' in os.environ:
+    TODOIST_SECTION_ID = os.environ['TODOIST_SECTION_ID']

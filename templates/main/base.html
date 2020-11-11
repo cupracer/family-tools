@@ -6,6 +6,7 @@
 {% block stylesheets %}
     {{ block.super }}
 
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
     {{ form.media.css }}
 {% endblock %}
@@ -42,6 +43,7 @@
         </script>
         <script src="{% static 'admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js' %} "></script>
         <script src="{% static 'admin-lte/dist/js/adminlte.min.js' %}"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
         {{ form.media.js }}
 

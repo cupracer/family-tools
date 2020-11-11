@@ -27,6 +27,7 @@
                         <th data-data="amount">Amount</th>
                         <th data-data="unit.name">Unit</th>
                         <th data-data="min_count">#min</th>
+                        <th>Todoist</th>
                         <th class="min">&nbsp;</th>
                     </tr>
                 </thead>
@@ -72,6 +73,14 @@
                         "defaultContent": '-'
                     },
                     {
+                        "className": "min col-center",
+                        "defaultContent": '-',
+                        "render": function (data, type, row) {
+                            let rowId = row['id'];
+                            return '<button id="todoist_button" class="btn btn-xs" value="' + rowId + '"><i class="fas fa-shopping-cart"></i></button>';
+                        }
+                    },
+                    {
                         "orderable": false,
                         "searchable": false,
                         "className": "min col-center",
@@ -86,6 +95,40 @@
                     },
                 ],
             });
+
+            $(document).on("click", "#todoist_button", function(){
+                let button = $(this);
+                let id = button.val();
+                button.prop('disabled', true);
+
+                $.ajax({
+                    url: "/supplies/supplies/" + id + "/todoist/",
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (data) {
+                        toastr.options = {
+                          "closeButton": false,
+                          "debug": false,
+                          "newestOnTop": true,
+                          "progressBar": true,
+                          "positionClass": "toast-top-right",
+                          "preventDuplicates": false,
+                          "onclick": null,
+                          "showDuration": "200",
+                          "hideDuration": "200",
+                          "timeOut": "2000",
+                          "extendedTimeOut": "5000",
+                          "showEasing": "swing",
+                          "hideEasing": "linear",
+                          "showMethod": "fadeIn",
+                          "hideMethod": "fadeOut"
+                        }
+                        toastr["success"]("added to Todoist", data.message)
+                        button.prop('disabled', false);
+                    }
+                });
+            });
         });
+
     </script>
 {% endblock %}

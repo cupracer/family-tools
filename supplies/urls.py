@@ -21,6 +21,7 @@ urlpatterns = [
     path('supplies/new/', views.SupplyCreateView.as_view(), name='supply_new'),
     path('supplies/<int:pk>/edit/', views.SupplyUpdateView.as_view(), name='supply_edit'),
     path('supplies/<int:pk>/delete/', views.SupplyDeleteView.as_view(), name='supply_delete'),
+    path('supplies/<int:pk>/todoist/', views.SupplyAddToTodoistView.as_view(), name='supply_todoist'),
 
     path('supply_items/', views.SupplyItemIndex.as_view(), name='supply_item_index'),
     path('supply_items/new/', views.SupplyItemCreateView.as_view(), name='supply_item_new'),

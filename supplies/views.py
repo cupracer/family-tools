@@ -2,15 +2,20 @@ from copy import copy
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db import models
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views import generic
 from bootstrap_modal_forms.mixins import PassRequestMixin
 from django.contrib import messages
+from django.views.generic.detail import BaseDetailView
 from guardian.mixins import PermissionRequiredMixin as GuardianPermissionRequiredMixin
+from django.http import JsonResponse
+import todoist
+from todoist.api import SyncError
 
+from family_tools import settings
 from .forms import BrandForm, CategoryForm, SupplyForm, SupplyItemForm, SupplyItemCreateForm, PackagingForm
 from .models import Brand, Category, Supply, SupplyItem, Packaging
 
@@ -465,6 +470,36 @@ class SupplyDeleteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessa
         except models.ProtectedError:
             messages.error(self.request, self.error_message + ' (still in use)')
             return HttpResponseRedirect(success_url)
+
+
+class SupplyAddToTodoistView(LoginRequiredMixin, PermissionRequiredMixin, BaseDetailView):
+    permission_required = 'supplies.view_supply'
+    queryset = Supply.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+
+        try:
+            api = todoist.TodoistAPI(settings.TODOIST_API_KEY)
+            item = api.items.add(self.object.name, project_id=settings.TODOIST_PROJECT_ID)
+            item.move(section_id=settings.TODOIST_SECTION_ID)
+            api.commit()
+        except KeyError:
+            return JsonResponse({
+                "status": "error",
+                "message": "key error"
+            })
+        except SyncError:
+            return JsonResponse({
+                "status": "error",
+                "message": "sync error"
+            })
+
+        return JsonResponse({
+            "status": "success",
+            "message": self.object.name
+        })
 
 
 class SupplyItemIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.TemplateView):
