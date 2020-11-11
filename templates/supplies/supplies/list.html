@@ -26,8 +26,11 @@
                         <th data-data="packaging.name">Packaging</th>
                         <th data-data="amount">Amount</th>
                         <th data-data="unit.name">Unit</th>
+                        <th data-data="num_items">#cur</th>
                         <th data-data="min_count">#min</th>
-                        <th>Todoist</th>
+                        {% if use_todoist %}
+                            <th>Todoist</th>
+                        {% endif %}
                         <th class="min">&nbsp;</th>
                     </tr>
                 </thead>
@@ -74,12 +77,20 @@
                     },
                     {
                         "className": "min col-center",
-                        "defaultContent": '-',
-                        "render": function (data, type, row) {
-                            let rowId = row['id'];
-                            return '<button id="todoist_button" class="btn btn-xs" value="' + rowId + '"><i class="fas fa-shopping-cart"></i></button>';
-                        }
+                        "defaultContent": '-'
                     },
+                    {% if use_todoist %}
+                        {
+                            "className": "min col-center",
+                            "defaultContent": '-',
+                            "orderable": false,
+                            "searchable": false,
+                            "render": function (data, type, row) {
+                                let rowId = row['id'];
+                                return '<button id="todoist_button" class="btn btn-xs" value="' + rowId + '"><i class="fas fa-shopping-cart"></i></button>';
+                            }
+                        },
+                    {% endif %}
                     {
                         "orderable": false,
                         "searchable": false,

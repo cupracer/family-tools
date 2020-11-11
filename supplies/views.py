@@ -378,7 +378,8 @@ class SupplyIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.T
         return render(request, self.template_name, {
             'site': self.site,
             'nav': self.nav,
-            'can_add': self.request.user.has_perm('supplies.add_supply')
+            'can_add': self.request.user.has_perm('supplies.add_supply'),
+            'use_todoist': True if self.request.user.todoist_api_key else False,
         })
 
 
