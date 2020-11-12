@@ -22,6 +22,7 @@ from family_tools import settings
 from .forms import BrandForm, CategoryForm, SupplyForm, SupplyItemForm, SupplyItemCreateForm, PackagingForm
 from .models import Brand, Category, Supply, SupplyItem, Packaging
 from .serializers import SupplyItemSerializer, SupplySerializer
+from .todoist import TodoistSync
 
 
 class CategoryIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.TemplateView):
@@ -517,10 +518,16 @@ class SupplyAddToTodoistView(LoginRequiredMixin, PermissionRequiredMixin, BaseDe
             if not self.request.user.todoist_api_key:
                 raise Exception('Todoist API key is missing.')
 
-            api = todoist.TodoistAPI(self.request.user.todoist_api_key)
-            item = api.items.add(self.object.name, project_id=settings.TODOIST_PROJECT_ID)
-            item.move(section_id=settings.TODOIST_SECTION_ID)
-            api.commit()
+            result = TodoistSync(self.request.user.todoist_api_key).add_to_shopping_list(
+                project_id=settings.TODOIST_PROJECT_ID,
+                section_id=settings.TODOIST_SECTION_ID,
+                name=self.object.name
+            )
+
+            return JsonResponse({
+                "status": "success",
+                "message": result
+            })
         except KeyError:
             return JsonResponse({
                 "status": "error",
@@ -531,21 +538,16 @@ class SupplyAddToTodoistView(LoginRequiredMixin, PermissionRequiredMixin, BaseDe
                 "status": "error",
                 "message": "sync error"
             })
-        except TypeError:
-            return JsonResponse({
-                "status": "error",
-                "message": "type error"
-            })
+        # except TypeError:
+        #     return JsonResponse({
+        #         "status": "error",
+        #         "message": "type error"
+        #     })
         except Exception as inst:
             return JsonResponse({
                 "status": "error",
                 "message": inst.args
             })
-
-        return JsonResponse({
-            "status": "success",
-            "message": self.object.name
-        })
 
 
 class SupplyItemIndex(LoginRequiredMixin, GuardianPermissionRequiredMixin, generic.TemplateView):
