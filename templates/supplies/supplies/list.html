@@ -26,7 +26,7 @@
                         <th data-data="packaging.name">Packaging</th>
                         <th data-data="amount">Amount</th>
                         <th data-data="unit.name">Unit</th>
-                        <th data-data="num_items">#cur</th>
+                        <th data-data="num_items">#cnt</th>
                         <th data-data="min_count">#min</th>
                         {% if use_todoist %}
                             <th>Todoist</th>
@@ -75,12 +75,38 @@
                         "className": "min col-center",
                         "defaultContent": '-',
                         "render": function (data, type, row) {
-                            return '<a href="/supplies/supply_items/by_supply/' + row['id'] + '/">' + data + '</a>';
+                            let minCount = row['min_count'];
+                            let buttonColor = 'primary';
+                            let buttonText = data;
+
+                            if(minCount) {
+                                buttonText = data + ' / ' + minCount;
+                            }
+
+                            if(!minCount && data === 0) {
+                                buttonColor = 'secondary';
+                            }
+
+                            if(minCount && data >= minCount) {
+                                buttonColor = 'success';
+                            }
+
+                            if(minCount && data < minCount && data > 0) {
+                                buttonColor = 'warning';
+                            }
+
+                            if(minCount && data < minCount && data === 0) {
+                                buttonColor = 'danger';
+                            }
+
+                            let button = '<button class="btn btn-xs btn-block bg-gradient-' + buttonColor + '" href="/supplies/supply_items/by_supply/' + row['id'] + '/">' + buttonText + '</button>';
+                            return '<a href="/supplies/supply_items/by_supply/' + row['id'] + '/">' + button + '</a>';
                         }
                     },
                     {
                         "className": "min col-center",
-                        "defaultContent": '-'
+                        "defaultContent": '-',
+                        "visible": false,
                     },
                     {% if use_todoist %}
                         {
