@@ -19,7 +19,7 @@
                 <thead>
                     <tr>
                         <th data-data="id" class="min">ID</th>
-                        <th data-data="supply.name">Name</th>
+                        <th data-data="supply" data-name="supply.name">Name</th>
                         <th data-data="supply.brand.name">Brand</th>
                         <th data-data="supply.category.name">Category</th>
                         <th data-data="supply.amount">Amount</th>
@@ -50,11 +50,17 @@
                 "scrollX": true,
                 "columns": [
                     { "className": "min col-right", },
-                    null,
+                    {
+                        "render": function (data, type, row) {
+                            return '<a href="/supplies/supplies/by_id/' + data.id + '/">' + data.name + '</a>';
+                        }
+                    },
                     {
                         "defaultContent": '-'
                     },
-                    null,
+                    {
+                        "defaultContent": '-'
+                    },
                     { "className": "min col-right", },
                     { "className": "min", },
                     {

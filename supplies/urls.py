@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import SupplyItemBySupplyJson
+from .views import SupplyItemBySupplyJson, SupplyByIdJson
 
 urlpatterns = [
     path('categories/', views.CategoryIndex.as_view(), name='supplies_category_index'),
@@ -23,6 +23,9 @@ urlpatterns = [
     path('supplies/<int:pk>/edit/', views.SupplyUpdateView.as_view(), name='supply_edit'),
     path('supplies/<int:pk>/delete/', views.SupplyDeleteView.as_view(), name='supply_delete'),
     path('supplies/<int:pk>/todoist/', views.SupplyAddToTodoistView.as_view(), name='supply_todoist'),
+
+    path('supplies/by_id/<int:supply_id>/', views.SupplyIndex.as_view()),
+    path('supplies/by_id/<int:supply_id>/json/', SupplyByIdJson.as_view()),
 
     path('supply_items/', views.SupplyItemIndex.as_view(), name='supply_item_index'),
     path('supply_items/new/', views.SupplyItemCreateView.as_view(), name='supply_item_new'),

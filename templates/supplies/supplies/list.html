@@ -15,7 +15,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="datatables" class="table table-striped" data-server-side="true" data-ajax="/api/supplies/supplies/?format=datatables">
+              <table id="datatables" class="table table-striped" data-server-side="true" data-ajax="{{ datatables_path }}">
                 <thead>
                     <tr>
                         <th data-data="id" class="min">ID</th>
@@ -83,9 +83,9 @@
                                 buttonText = data + ' / ' + minCount;
                             }
 
-                            if(!minCount && data === 0) {
-                                buttonColor = 'secondary';
-                            }
+                            // if(!minCount && data === 0) {
+                            //    buttonColor = 'secondary';
+                            //}
 
                             if(minCount && data >= minCount) {
                                 buttonColor = 'success';
@@ -101,7 +101,9 @@
 
                             let button = '<button class="btn btn-xs btn-block bg-gradient-' + buttonColor + '">' + buttonText + '</button>';
 
-                            if(data > 0) {
+                            if(!minCount && data === 0) {
+                                return '';
+                            }else if(data > 0) {
                                 return '<a href="/supplies/supply_items/by_supply/' + row['id'] + '/">' + button + '</a>';
                             }else {
                                 return button;
