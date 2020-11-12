@@ -519,19 +519,14 @@ class SupplyAddToTodoistView(LoginRequiredMixin, PermissionRequiredMixin, BaseDe
                 raise Exception('Todoist API key is missing.')
 
             result = TodoistSync(self.request.user.todoist_api_key).add_to_shopping_list(
-                project_id=settings.TODOIST_PROJECT_ID,
-                section_id=settings.TODOIST_SECTION_ID,
-                name=self.object.name
+                project_name=settings.TODOIST_PROJECT_NAME,
+                section_name=settings.TODOIST_SECTION_NAME,
+                supply_name=self.object.name
             )
 
             return JsonResponse({
                 "status": "success",
                 "message": result
-            })
-        except KeyError:
-            return JsonResponse({
-                "status": "error",
-                "message": "key error"
             })
         except SyncError:
             return JsonResponse({
