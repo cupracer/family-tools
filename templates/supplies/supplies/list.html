@@ -78,9 +78,11 @@
                             let minCount = row['min_count'];
                             let buttonColor = 'primary';
                             let buttonText = data;
+                            let titleText = "current: " + data;
 
                             if(minCount) {
                                 buttonText = data + ' / ' + minCount;
+                                titleText = "current: " + data + ' / min: ' + minCount;
                             }
 
                             // if(!minCount && data === 0) {
@@ -99,7 +101,7 @@
                                 buttonColor = 'danger';
                             }
 
-                            let button = '<button class="btn btn-xs btn-block bg-gradient-' + buttonColor + '">' + buttonText + '</button>';
+                            let button = '<button class="btn btn-xs btn-block bg-gradient-' + buttonColor + '" title="' + titleText + '">' + buttonText + '</button>';
 
                             if(!minCount && data === 0) {
                                 return '';
