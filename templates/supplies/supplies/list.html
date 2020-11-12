@@ -99,8 +99,13 @@
                                 buttonColor = 'danger';
                             }
 
-                            let button = '<button class="btn btn-xs btn-block bg-gradient-' + buttonColor + '" href="/supplies/supply_items/by_supply/' + row['id'] + '/">' + buttonText + '</button>';
-                            return '<a href="/supplies/supply_items/by_supply/' + row['id'] + '/">' + button + '</a>';
+                            let button = '<button class="btn btn-xs btn-block bg-gradient-' + buttonColor + '">' + buttonText + '</button>';
+
+                            if(data > 0) {
+                                return '<a href="/supplies/supply_items/by_supply/' + row['id'] + '/">' + button + '</a>';
+                            }else {
+                                return button;
+                            }
                         }
                     },
                     {
