@@ -14,10 +14,10 @@ from django.contrib import messages
 from django.views.generic.detail import BaseDetailView
 from guardian.mixins import PermissionRequiredMixin as GuardianPermissionRequiredMixin
 from django.http import JsonResponse
-import todoist
 from rest_framework.response import Response
 from todoist.api import SyncError
 from rest_framework import generics
+from django.db.models import Q
 
 from family_tools import settings
 from .forms import BrandForm, CategoryForm, SupplyForm, SupplyItemForm, SupplyItemCreateForm, PackagingForm
@@ -409,7 +409,7 @@ class SupplyByIdJson(generics.ListAPIView):
     def get_queryset(self):
         supply_id = self.kwargs['supply_id']
         return Supply.objects.filter(pk=supply_id).annotate(
-            num_items=Count('supplyitem', distinct=True))
+            num_items=Count('supplyitem', distinct=True, filter=Q(supplyitem__checkout_date=None)))
 
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -588,7 +588,7 @@ class SupplyItemBySupplyJson(generics.ListAPIView):
 
     def get_queryset(self):
         supply_id = self.kwargs['supply_id']
-        return SupplyItem.objects.filter(supply_id=supply_id)
+        return SupplyItem.objects.filter(supply_id=supply_id, checkout_date=None)
 
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()

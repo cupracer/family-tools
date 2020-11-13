@@ -1,6 +1,7 @@
 from django.db.models import Count
 from rest_framework import viewsets
 from rest_framework_datatables import filters
+from django.db.models import Q
 
 from .serializers import CategorySerializer, BrandSerializer, SupplySerializer, UnitSerializer, SupplyItemSerializer, \
     PackagingSerializer
@@ -33,7 +34,7 @@ class PackagingViewSet(viewsets.ModelViewSet):
 
 class SupplyViewSet(viewsets.ModelViewSet):
     queryset = Supply.objects.all().annotate(
-        num_items=Count('supplyitem', distinct=True)
+        num_items=Count('supplyitem', distinct=True, filter=Q(supplyitem__checkout_date=None))
     )
     serializer_class = SupplySerializer
     filter_backends = [filters.DatatablesFilterBackend]
