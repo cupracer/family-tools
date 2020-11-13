@@ -52,9 +52,18 @@
                 "scrollX": true,
                 "columns": [
                    { "className": "min col-right", },
-                    null,
+                    {
+                       "render": function (data, type, row) {
+                           let output = data;
+                            if(row['bio_label'] === true) {
+                                output += ' <i class="fas fa-seedling text-success" title="Bio"></i>';
+                            }
+                            return output;
+                        }
+                   },
                     {
                         "className": "min col-center",
+                        "visible": false,
                     },
                     {
                         "defaultContent": '-'

@@ -52,7 +52,11 @@
                     { "className": "min col-right", },
                     {
                         "render": function (data, type, row) {
-                            return '<a href="/supplies/supplies/by_id/' + data.id + '/">' + data.name + '</a>';
+                            let output = '<a href="/supplies/supplies/by_id/' + data.id + '/">' + data.name + '</a>';
+                            if(row['supply']['bio_label'] === true) {
+                                output += ' <i class="fas fa-seedling text-success" title="Bio"></i>';
+                            }
+                            return output;
                         }
                     },
                     {
