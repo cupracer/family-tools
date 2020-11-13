@@ -104,8 +104,8 @@
                   "onclick": null,
                   "showDuration": "200",
                   "hideDuration": "200",
-                  "timeOut": "3000",
-                  "extendedTimeOut": "5000",
+                  "timeOut": "5000",
+                  "extendedTimeOut": "3000",
                   "showEasing": "swing",
                   "hideEasing": "linear",
                   "showMethod": "fadeIn",
@@ -118,13 +118,51 @@
                     dataType: 'json',
                     success: function (data) {
                         if(data.status === "success") {
-                            toastr["success"](data.message, "checked out");
                             dataTables.draw();
+                            toastr["success"](data.message + '<br>' + '<button id="checkin_button" class="btn btn-xs bg-white" value="' + data.id + '" title="cancel"><i class="far fa-times-circle text-danger"> Cancel checkout</i></button>', "checked out");
                         }else if(data.status === "error") {
                             toastr.options.timeOut = "5000"
                             toastr["error"](data.message, "error occurred");
                         }
-                        button.prop('disabled', false);
+                    }
+                });
+            });
+
+            $(document).on("click", "#checkin_button", function(){
+                let button = $(this);
+                let id = button.val();
+                button.prop('disabled', true);
+
+                toastr.options = {
+                  "closeButton": false,
+                  "debug": false,
+                  "newestOnTop": true,
+                  "progressBar": true,
+                  "positionClass": "toast-top-right",
+                  "preventDuplicates": false,
+                  "onclick": null,
+                  "showDuration": "200",
+                  "hideDuration": "200",
+                  "timeOut": "3000",
+                  "extendedTimeOut": "3000",
+                  "showEasing": "swing",
+                  "hideEasing": "linear",
+                  "showMethod": "fadeIn",
+                  "hideMethod": "fadeOut"
+                }
+
+                $.ajax({
+                    url: "/supplies/supply_items/" + id + "/checkin/",
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.status === "success") {
+                            dataTables.draw();
+                            toastr["info"](data.message, "cancelled checkout");
+                        }else if(data.status === "error") {
+                            toastr.options.timeOut = "5000"
+                            toastr["error"](data.message, "error occurred");
+                        }
                     }
                 });
             });

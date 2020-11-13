@@ -746,6 +746,30 @@ class SupplyItemCheckoutView(LoginRequiredMixin, PermissionRequiredMixin, BaseDe
 
             return JsonResponse({
                 "status": "success",
+                "id": self.object.id,
+                "message": self.object.supply.name
+            })
+        except:
+            return JsonResponse({
+                "status": "error",
+                "message": "some error occurred"
+            })
+
+
+class SupplyItemCheckinView(LoginRequiredMixin, PermissionRequiredMixin, BaseDetailView):
+    permission_required = 'supplies.change_supplyitem'
+    queryset = SupplyItem.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+
+        try:
+            self.object.checkout_date = None
+            self.object.save()
+
+            return JsonResponse({
+                "status": "success",
                 "message": self.object.supply.name
             })
         except:
