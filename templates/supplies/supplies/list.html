@@ -28,9 +28,6 @@
                         <th data-data="unit.name">Unit</th>
                         <th data-data="num_items">#cnt</th>
                         <th data-data="min_count">#min</th>
-                        {% if use_todoist %}
-                            <th>Todoist</th>
-                        {% endif %}
                         <th class="min">&nbsp;</th>
                     </tr>
                 </thead>
@@ -117,18 +114,6 @@
                         "defaultContent": '-',
                         "visible": false,
                     },
-                    {% if use_todoist %}
-                        {
-                            "className": "min col-center",
-                            "defaultContent": '-',
-                            "orderable": false,
-                            "searchable": false,
-                            "render": function (data, type, row) {
-                                let rowId = row['id'];
-                                return '<button id="todoist_button" class="btn btn-xs" value="' + rowId + '"><i class="fas fa-shopping-cart"></i></button>';
-                            }
-                        },
-                    {% endif %}
                     {
                         "orderable": false,
                         "searchable": false,
@@ -136,8 +121,11 @@
                         "render": function (data, type, row) {
                             let rowId = row['id'];
                             let links = '<div class="btn-group" role="group">';
-                            links+= '<a class="btn btn-xs" href="/supplies/supplies/' + rowId + '/edit"><i class="fa fa-fw fa-edit text-primary"></i></a>'
-                            links+= '<a class="btn btn-xs" href="/supplies/supplies/' + rowId + '/delete"><i class="fa fa-fw fa-trash text-danger"></i></a>'
+                            {% if use_todoist %}
+                                links+= '<button id="todoist_button" class="btn btn-xs" value="' + rowId + '" title="Todoist"><i class="fas fa-shopping-cart text-secondary"></i></button>';
+                            {% endif %}
+                            links+= '<a class="btn btn-xs" href="/supplies/supplies/' + rowId + '/edit" title="edit"><i class="fa fa-fw fa-edit text-primary"></i></a>'
+                            links+= '<a class="btn btn-xs" href="/supplies/supplies/' + rowId + '/delete" title="delete"><i class="fa fa-fw fa-trash text-danger"></i></a>'
                             links+= '</div>';
                             return links;
                         }

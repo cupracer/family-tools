@@ -71,3 +71,4 @@ class SupplyItem(models.Model):
     supply = models.ForeignKey(Supply, on_delete=models.PROTECT, null=False, blank=False)
     purchase_date = models.DateField('purchase date', null=True, blank=True)
     best_before_date = models.DateField('best-before date', null=True, blank=True)
+    checkout_date = models.DateField('checkout date', null=True, blank=True)

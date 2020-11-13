@@ -78,14 +78,55 @@
                         "render": function (data, type, row) {
                             let rowId = row['id'];
                             let links = '<div class="btn-group" role="group">';
-                            links+= '<a class="btn btn-xs" href="/supplies/supply_items/' + rowId + '/clone"><i class="far fa-fw fa-clone text-warning"></i></a>'
-                            links+= '<a class="btn btn-xs" href="/supplies/supply_items/' + rowId + '/edit"><i class="fa fa-fw fa-edit text-primary"></i></a>'
-                            links+= '<a class="btn btn-xs" href="/supplies/supply_items/' + rowId + '/delete"><i class="fa fa-fw fa-trash text-danger"></i></a>'
+                            links+= '<button id="checkout_button" class="btn btn-xs" value="' + rowId + '" title="checkout"><i class="fas fa-shopping-basket text-secondary"></i></button>';
+                            links+= '<a class="btn btn-xs" href="/supplies/supply_items/' + rowId + '/clone" title="clone"><i class="far fa-fw fa-clone text-warning"></i></a>'
+                            links+= '<a class="btn btn-xs" href="/supplies/supply_items/' + rowId + '/edit" title="edit"><i class="fa fa-fw fa-edit text-primary"></i></a>'
+                            links+= '<a class="btn btn-xs" href="/supplies/supply_items/' + rowId + '/delete" title="delete"><i class="fa fa-fw fa-trash text-danger"></i></a>'
                             links+= '</div>';
                             return links;
                         }
                     },
                 ],
+            });
+
+            $(document).on("click", "#checkout_button", function(){
+                let button = $(this);
+                let id = button.val();
+                button.prop('disabled', true);
+
+                toastr.options = {
+                  "closeButton": false,
+                  "debug": false,
+                  "newestOnTop": true,
+                  "progressBar": true,
+                  "positionClass": "toast-top-right",
+                  "preventDuplicates": false,
+                  "onclick": null,
+                  "showDuration": "200",
+                  "hideDuration": "200",
+                  "timeOut": "3000",
+                  "extendedTimeOut": "5000",
+                  "showEasing": "swing",
+                  "hideEasing": "linear",
+                  "showMethod": "fadeIn",
+                  "hideMethod": "fadeOut"
+                }
+
+                $.ajax({
+                    url: "/supplies/supply_items/" + id + "/checkout/",
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.status === "success") {
+                            toastr["success"](data.message, "checked out");
+                            dataTables.draw();
+                        }else if(data.status === "error") {
+                            toastr.options.timeOut = "5000"
+                            toastr["error"](data.message, "error occurred");
+                        }
+                        button.prop('disabled', false);
+                    }
+                });
             });
         });
     </script>

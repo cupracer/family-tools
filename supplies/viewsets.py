@@ -40,6 +40,6 @@ class SupplyViewSet(viewsets.ModelViewSet):
 
 
 class SupplyItemViewSet(viewsets.ModelViewSet):
-    queryset = SupplyItem.objects.all()
+    queryset = SupplyItem.objects.filter(checkout_date=None)
     serializer_class = SupplyItemSerializer
     filter_backends = [filters.DatatablesFilterBackend]

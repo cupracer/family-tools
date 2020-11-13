@@ -32,6 +32,7 @@ urlpatterns = [
     path('supply_items/<int:pk>/edit/', views.SupplyItemUpdateView.as_view(), name='supply_item_edit'),
     path('supply_items/<int:pk>/delete/', views.SupplyItemDeleteView.as_view(), name='supply_item_delete'),
     path('supply_items/<int:pk>/clone/', views.SupplyItemCloneView.as_view(), name='supply_item_clone'),
+    path('supply_items/<int:pk>/checkout/', views.SupplyItemCheckoutView.as_view(), name='supply_checkout'),
 
     path('supply_items/by_supply/<int:supply_id>/', views.SupplyItemIndex.as_view()),
     path('supply_items/by_supply/<int:supply_id>/json/', SupplyItemBySupplyJson.as_view()),
