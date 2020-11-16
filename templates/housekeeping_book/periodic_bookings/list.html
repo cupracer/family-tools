@@ -53,6 +53,11 @@
                 "order": [[ 1, "asc" ], [ 2, "asc" ]],
                 "responsive": true,
                 "scrollX": true,
+                "stateSave": true,
+                "stateDuration": -1,
+                "stateSaveParams": function (settings, data) {
+                    data.search.search = "";
+                },
                 dom: 'lBfrtip',
                 buttons: [
                     {

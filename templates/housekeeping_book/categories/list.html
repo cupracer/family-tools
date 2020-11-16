@@ -44,6 +44,11 @@
                 "order": [[ 1, "asc" ]],
                 "responsive": true,
                 "scrollX": true,
+                "stateSave": true,
+                "stateDuration": -1,
+                "stateSaveParams": function (settings, data) {
+                    data.search.search = "";
+                },
                 "columns": [
                    { "className": "min col-right", },
                     null,
