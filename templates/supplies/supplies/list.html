@@ -26,7 +26,7 @@
                         <th data-data="packaging.name">Packaging</th>
                         <th data-data="amount">Amount</th>
                         <th data-data="unit.name">Unit</th>
-                        <th data-data="order_value">#order</th>
+                        <th data-data="order_value">#stock</th>
                         <th data-data="min_count">#min</th>
                         <th data-data="num_items">#cnt</th>
                         <th class="min">&nbsp;</th>
@@ -94,10 +94,6 @@
                                 buttonText = row['num_items'] + ' / ' + minCount;
                                 titleText = "current: " + row['num_items'] + ' / min: ' + minCount;
                             }
-
-                            // if(!minCount && data === 0) {
-                            //    buttonColor = 'secondary';
-                            //}
 
                             if(minCount && row['num_items'] >= minCount) {
                                 buttonColor = 'success';
