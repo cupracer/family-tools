@@ -32,10 +32,11 @@ class SupplySerializer(serializers.HyperlinkedModelSerializer):
     unit = UnitSerializer()
     packaging = PackagingSerializer()
     num_items = serializers.IntegerField(read_only=True)
+    order_value = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Supply
-        fields = ('id', 'name', 'category', 'brand', 'unit', 'amount', 'bio_label', 'packaging', 'min_count', 'num_items')
+        fields = ('id', 'name', 'category', 'brand', 'unit', 'amount', 'bio_label', 'packaging', 'min_count', 'num_items', 'order_value')
 
 
 class SupplyItemSerializer(serializers.HyperlinkedModelSerializer):

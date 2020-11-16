@@ -26,8 +26,9 @@
                         <th data-data="packaging.name">Packaging</th>
                         <th data-data="amount">Amount</th>
                         <th data-data="unit.name">Unit</th>
-                        <th data-data="num_items">#cnt</th>
+                        <th data-data="order_value">#order</th>
                         <th data-data="min_count">#min</th>
+                        <th data-data="num_items">#cnt</th>
                         <th class="min">&nbsp;</th>
                     </tr>
                 </thead>
@@ -62,7 +63,6 @@
                         }
                    },
                     {
-                        "className": "min col-center",
                         "visible": false,
                     },
                     {
@@ -81,37 +81,41 @@
                         "className": "min col-center",
                         "defaultContent": '-',
                         "render": function (data, type, row) {
+                            if ( type === "sort" || type === 'type' ) {
+                                return row['order_value'];
+                            }
+
                             let minCount = row['min_count'];
                             let buttonColor = 'primary';
-                            let buttonText = data;
-                            let titleText = "current: " + data;
+                            let buttonText = row['num_items'];
+                            let titleText = "current: " + row['num_items'];
 
                             if(minCount) {
-                                buttonText = data + ' / ' + minCount;
-                                titleText = "current: " + data + ' / min: ' + minCount;
+                                buttonText = row['num_items'] + ' / ' + minCount;
+                                titleText = "current: " + row['num_items'] + ' / min: ' + minCount;
                             }
 
                             // if(!minCount && data === 0) {
                             //    buttonColor = 'secondary';
                             //}
 
-                            if(minCount && data >= minCount) {
+                            if(minCount && row['num_items'] >= minCount) {
                                 buttonColor = 'success';
                             }
 
-                            if(minCount && data < minCount && data > 0) {
+                            if(minCount && row['num_items'] < minCount && row['num_items'] > 0) {
                                 buttonColor = 'warning';
                             }
 
-                            if(minCount && data < minCount && data === 0) {
+                            if(minCount && row['num_items'] < minCount && row['num_items'] === 0) {
                                 buttonColor = 'danger';
                             }
 
                             let button = '<button class="btn btn-xs btn-block bg-gradient-' + buttonColor + '" title="' + titleText + '">' + buttonText + '</button>';
 
-                            if(!minCount && data === 0) {
+                            if(!minCount && row['num_items'] === 0) {
                                 return '';
-                            }else if(data > 0) {
+                            }else if(row['num_items'] > 0) {
                                 return '<a href="/supplies/supply_items/by_supply/' + row['id'] + '/">' + button + '</a>';
                             }else {
                                 return button;
@@ -119,8 +123,9 @@
                         }
                     },
                     {
-                        "className": "min col-center",
-                        "defaultContent": '-',
+                        "visible": false,
+                    },
+                    {
                         "visible": false,
                     },
                     {
