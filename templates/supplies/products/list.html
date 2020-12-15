@@ -10,7 +10,7 @@
             <div class="card-header">
               <h3 class="card-title p-2">{{ site.page_title }}</h3>
               {% if can_add %}
-                <a class="btn btn-outline-primary float-right" href="{% url 'supply_new' %}">Add...</a>
+                <a class="btn btn-outline-primary float-right" href="{% url 'product_new' %}">Add...</a>
               {% endif %}
             </div>
             <!-- /.card-header -->
@@ -19,8 +19,13 @@
                 <thead>
                     <tr>
                         <th data-data="id" class="min">ID</th>
-                        <th data-data="name">Name</th>
-                        <th data-data="category.name">Category</th>
+                        <th data-data="supply.name">Supply</th>
+                        <th data-data="bio_label">Bio</th>
+                        <th data-data="brand.name">Brand</th>
+                        <th data-data="supply.category.name">Category</th>
+                        <th data-data="packaging.name">Packaging</th>
+                        <th data-data="amount">Amount</th>
+                        <th data-data="unit.name">Unit</th>
                         <th data-data="order_value">#stock</th>
                         <th data-data="min_count">#min</th>
                         <th data-data="num_items">#cnt</th>
@@ -55,16 +60,28 @@
                    { "className": "min col-right", },
                     {
                        "render": function (data, type, row) {
-                           let output = '<a href="/supplies/products/by_supply/' + row["id"] + '/">' + data + '</a>';
+                           let output = data;
                             if(row['bio_label'] === true) {
                                 output += ' <i class="fas fa-seedling text-success" title="Bio"></i>';
                             }
                             return output;
                         }
                    },
-
+                    {
+                        "visible": false,
+                    },
+                    {
+                        "defaultContent": '-'
+                    },
                     null,
-
+                    {
+                        "className": "min",
+                        "defaultContent": '-'
+                    },
+                    { "className": "min col-right", },
+                    {
+                        "className": "min col-center",
+                    },
                     {
                         "className": "min col-center",
                         "defaultContent": '-',
@@ -100,7 +117,7 @@
                             if(!minCount && row['num_items'] === 0) {
                                 return '';
                             }else if(row['num_items'] > 0) {
-                                return '<a href="/supplies/supply_items/by_supply/' + row['id'] + '/">' + button + '</a>';
+                                return '<a href="/supplies/supply_items/by_product/' + row['id'] + '/">' + button + '</a>';
                             }else {
                                 return button;
                             }
@@ -122,8 +139,8 @@
                             {% if use_todoist %}
                                 links+= '<button id="todoist_button" class="btn btn-xs" value="' + rowId + '" title="Todoist"><i class="fas fa-shopping-cart text-secondary"></i></button>';
                             {% endif %}
-                            links+= '<a class="btn btn-xs" href="/supplies/supplies/' + rowId + '/edit" title="edit"><i class="fa fa-fw fa-edit text-primary"></i></a>'
-                            links+= '<a class="btn btn-xs" href="/supplies/supplies/' + rowId + '/delete" title="delete"><i class="fa fa-fw fa-trash text-danger"></i></a>'
+                            links+= '<a class="btn btn-xs" href="/supplies/products/' + rowId + '/edit" title="edit"><i class="fa fa-fw fa-edit text-primary"></i></a>'
+                            links+= '<a class="btn btn-xs" href="/supplies/products/' + rowId + '/delete" title="delete"><i class="fa fa-fw fa-trash text-danger"></i></a>'
                             links+= '</div>';
                             return links;
                         }
@@ -155,7 +172,7 @@
                 }
 
                 $.ajax({
-                    url: "/supplies/supplies/" + id + "/todoist/",
+                    url: "/supplies/products/" + id + "/todoist/",
                     type: "GET",
                     dataType: 'json',
                     success: function (data) {

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Brand, Supply, Unit, SupplyItem, Packaging
+from .models import Category, Brand, Supply, Unit, SupplyItem, Packaging, Product
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
@@ -28,6 +28,16 @@ class PackagingSerializer(serializers.HyperlinkedModelSerializer):
 
 class SupplySerializer(serializers.HyperlinkedModelSerializer):
     category = CategorySerializer()
+    num_items = serializers.IntegerField(read_only=True)
+    order_value = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Supply
+        fields = ('id', 'name', 'category', 'min_count', 'num_items', 'order_value')
+
+
+class ProductSerializer(serializers.HyperlinkedModelSerializer):
+    supply = SupplySerializer()
     brand = BrandSerializer()
     unit = UnitSerializer()
     packaging = PackagingSerializer()
@@ -35,13 +45,13 @@ class SupplySerializer(serializers.HyperlinkedModelSerializer):
     order_value = serializers.IntegerField(read_only=True)
 
     class Meta:
-        model = Supply
-        fields = ('id', 'name', 'category', 'brand', 'unit', 'amount', 'bio_label', 'packaging', 'min_count', 'num_items', 'order_value')
+        model = Product
+        fields = ('id', 'supply', 'brand', 'unit', 'amount', 'bio_label', 'packaging', 'min_count', 'num_items', 'order_value')
 
 
 class SupplyItemSerializer(serializers.HyperlinkedModelSerializer):
-    supply = SupplySerializer()
+    product = ProductSerializer()
 
     class Meta:
         model = SupplyItem
-        fields = ('id', 'supply', 'purchase_date', 'best_before_date')
+        fields = ('id', 'product', 'purchase_date', 'best_before_date')

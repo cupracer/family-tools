@@ -3,7 +3,7 @@ from bootstrap_modal_forms.mixins import PopRequestMixin
 from django import forms
 from django.forms import TextInput, NumberInput, CheckboxInput
 from django_select2.forms import ModelSelect2Widget
-from .models import Category, Brand, Supply, Unit, SupplyItem, Packaging
+from .models import Category, Brand, Supply, Unit, SupplyItem, Packaging, Product
 
 
 class CategorySelect2Widget(ModelSelect2Widget):
@@ -79,7 +79,7 @@ class UnitSelect2Widget(ModelSelect2Widget):
 class SupplyForm(PopRequestMixin, forms.ModelForm):
     class Meta:
         model = Supply
-        fields = ('name', 'category', 'brand', 'unit', 'amount', 'packaging', 'bio_label', 'min_count')
+        fields = ('name', 'category', 'min_count')
         widgets = {
             'name': TextInput(attrs={
                     'class': 'form-control',
@@ -87,6 +87,32 @@ class SupplyForm(PopRequestMixin, forms.ModelForm):
                 }
             ),
             'category': CategorySelect2Widget(
+                attrs={
+                    'class': 'form-control',
+                    'data-minimum-input-length': 0,
+                }
+            ),
+            'min_count': NumberInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+        }
+
+
+class SupplySelect2Widget(ModelSelect2Widget):
+    model = Supply
+    search_fields = [
+        'name__icontains',
+    ]
+
+
+class ProductForm(PopRequestMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('supply', 'brand', 'unit', 'amount', 'packaging', 'bio_label', 'min_count')
+        widgets = {
+            'supply': SupplySelect2Widget(
                 attrs={
                     'class': 'form-control',
                     'data-minimum-input-length': 0,
@@ -128,10 +154,10 @@ class SupplyForm(PopRequestMixin, forms.ModelForm):
         }
 
 
-class SupplySelect2Widget(ModelSelect2Widget):
-    model = Supply
+class ProductSelect2Widget(ModelSelect2Widget):
+    model = Product
     search_fields = [
-        'name__icontains',
+        'supply__name__icontains',
         'brand__name__icontains'
     ]
 
@@ -139,9 +165,9 @@ class SupplySelect2Widget(ModelSelect2Widget):
 class SupplyItemForm(PopRequestMixin, forms.ModelForm):
     class Meta:
         model = SupplyItem
-        fields = ('supply', 'purchase_date', 'best_before_date',)
+        fields = ('product', 'purchase_date', 'best_before_date',)
         widgets = {
-            'supply': SupplySelect2Widget(
+            'product': ProductSelect2Widget(
                 attrs={
                     'class': 'form-control',
                     'data-minimum-input-length': 0,

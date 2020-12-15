@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import SupplyItemBySupplyJson, SupplyByIdJson
+from .views import SupplyByIdJson, ProductByIdJson, SupplyItemByProductJson, SupplyItemBySupplyJson, ProductBySupplyJson
 
 urlpatterns = [
     path('categories/', views.CategoryIndex.as_view(), name='supplies_category_index'),
@@ -27,6 +27,15 @@ urlpatterns = [
     path('supplies/by_id/<int:supply_id>/', views.SupplyIndex.as_view()),
     path('supplies/by_id/<int:supply_id>/json/', SupplyByIdJson.as_view()),
 
+    path('products/', views.ProductIndex.as_view(), name='product_index'),
+    path('products/new/', views.ProductCreateView.as_view(), name='product_new'),
+    path('products/<int:pk>/edit/', views.ProductUpdateView.as_view(), name='product_edit'),
+    path('products/<int:pk>/delete/', views.ProductDeleteView.as_view(), name='product_delete'),
+    path('products/<int:pk>/todoist/', views.ProductAddToTodoistView.as_view(), name='product_todoist'),
+
+    path('products/by_id/<int:product_id>/', views.ProductIndex.as_view()),
+    path('products/by_id/<int:product_id>/json/', ProductByIdJson.as_view()),
+
     path('supply_items/', views.SupplyItemIndex.as_view(), name='supply_item_index'),
     path('supply_items/new/', views.SupplyItemCreateView.as_view(), name='supply_item_new'),
     path('supply_items/<int:pk>/edit/', views.SupplyItemUpdateView.as_view(), name='supply_item_edit'),
@@ -35,6 +44,12 @@ urlpatterns = [
     path('supply_items/<int:pk>/checkout/', views.SupplyItemCheckoutView.as_view(), name='supply_checkout'),
     path('supply_items/<int:pk>/checkin/', views.SupplyItemCheckinView.as_view(), name='supply_checkin'),
 
+    path('products/by_supply/<int:supply_id>/', views.ProductIndex.as_view()),
+    path('products/by_supply/<int:supply_id>/json/', ProductBySupplyJson.as_view()),
+
     path('supply_items/by_supply/<int:supply_id>/', views.SupplyItemIndex.as_view()),
     path('supply_items/by_supply/<int:supply_id>/json/', SupplyItemBySupplyJson.as_view()),
+
+    path('supply_items/by_product/<int:product_id>/', views.SupplyItemIndex.as_view()),
+    path('supply_items/by_product/<int:product_id>/json/', SupplyItemByProductJson.as_view()),
 ]

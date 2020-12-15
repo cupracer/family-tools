@@ -48,6 +48,17 @@ class Packaging(models.Model):
 class Supply(models.Model):
     name = models.CharField(null=True, blank=True, max_length=500)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True, blank=False)
+    min_count = models.IntegerField(null=True, blank=True, default=None)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        unique_together = ('name', 'category')
+
+
+class Product(models.Model):
+    supply = models.ForeignKey(Supply, on_delete=models.PROTECT, null=False, blank=False)
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True, blank=True)
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT, null=False, blank=False)
     amount = models.IntegerField()
@@ -56,7 +67,7 @@ class Supply(models.Model):
     min_count = models.IntegerField(null=True, blank=True, default=None)
 
     def __str__(self):
-        custom = self.name
+        custom = self.supply.name
         if self.brand:
             custom += ' - ' + self.brand.name
         custom += ' - ' + str(self.amount)
@@ -64,11 +75,12 @@ class Supply(models.Model):
         return custom
 
     class Meta:
-        unique_together = ('name', 'category', 'brand', 'unit', 'amount', 'packaging')
+        unique_together = ('supply', 'brand', 'unit', 'amount', 'packaging')
 
 
 class SupplyItem(models.Model):
-    supply = models.ForeignKey(Supply, on_delete=models.PROTECT, null=False, blank=False)
+    # supply = models.ForeignKey(Supply, on_delete=models.PROTECT, null=False, blank=False)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, blank=False)
     purchase_date = models.DateField('purchase date', null=True, blank=True)
     best_before_date = models.DateField('best-before date', null=True, blank=True)
     checkout_date = models.DateField('checkout date', null=True, blank=True)
