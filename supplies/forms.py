@@ -110,13 +110,18 @@ class SupplySelect2Widget(ModelSelect2Widget):
 class ProductForm(PopRequestMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('supply', 'brand', 'unit', 'amount', 'packaging', 'bio_label', 'min_count')
+        fields = ('supply', 'name', 'brand', 'unit', 'amount', 'packaging', 'bio_label', 'min_count')
         widgets = {
             'supply': SupplySelect2Widget(
                 attrs={
                     'class': 'form-control',
                     'data-minimum-input-length': 0,
                 }
+            ),
+            'name': TextInput(attrs={
+                'class': 'form-control',
+                'autofocus': 'autofocus',
+            }
             ),
             'brand': BrandSelect2Widget(
                 attrs={
@@ -157,6 +162,7 @@ class ProductForm(PopRequestMixin, forms.ModelForm):
 class ProductSelect2Widget(ModelSelect2Widget):
     model = Product
     search_fields = [
+        'name__icontains',
         'supply__name__icontains',
         'brand__name__icontains'
     ]

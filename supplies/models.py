@@ -59,6 +59,7 @@ class Supply(models.Model):
 
 class Product(models.Model):
     supply = models.ForeignKey(Supply, on_delete=models.PROTECT, null=False, blank=False)
+    name = models.CharField(null=True, blank=True, max_length=500)
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True, blank=True)
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT, null=False, blank=False)
     amount = models.IntegerField()
@@ -68,6 +69,8 @@ class Product(models.Model):
 
     def __str__(self):
         custom = self.supply.name
+        if self.name:
+            custom += ' - ' + self.name
         if self.brand:
             custom += ' - ' + self.brand.name
         custom += ' - ' + str(self.amount)
@@ -75,11 +78,10 @@ class Product(models.Model):
         return custom
 
     class Meta:
-        unique_together = ('supply', 'brand', 'unit', 'amount', 'packaging')
+        unique_together = ('supply', 'name', 'brand', 'unit', 'amount', 'packaging')
 
 
 class SupplyItem(models.Model):
-    # supply = models.ForeignKey(Supply, on_delete=models.PROTECT, null=False, blank=False)
     product = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, blank=False)
     purchase_date = models.DateField('purchase date', null=True, blank=True)
     best_before_date = models.DateField('best-before date', null=True, blank=True)

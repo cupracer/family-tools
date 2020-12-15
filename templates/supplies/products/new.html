@@ -43,6 +43,17 @@
                                     </div>
 
                                     <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <label>{{ form.name.label_tag }}</label>
+                                                {{ form.name.errors }}
+                                                {{ form.name }}
+                                                <small id="name_help" class="form-text text-muted">Name</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>{{ form.brand.label_tag }}</label>
