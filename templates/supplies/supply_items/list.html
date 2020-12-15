@@ -53,6 +53,11 @@
                 "stateSaveParams": function (settings, data) {
                     data.search.search = "";
                 },
+                {% comment %}
+                rowGroup: {
+                    dataSrc: 'product.supply.name'
+                },
+                {% endcomment %}
                 "columns": [
                     { "className": "min col-right", },
                     {
@@ -62,7 +67,7 @@
                                 output += ' <i class="fas fa-seedling text-success" title="Bio"></i>';
                             }
                             return output;
-                        }
+                        },
                     },
                     {
                         "defaultContent": '-'
