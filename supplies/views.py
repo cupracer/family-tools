@@ -973,7 +973,7 @@ class SupplyItemCheckoutView(LoginRequiredMixin, PermissionRequiredMixin, BaseDe
             return JsonResponse({
                 "status": "success",
                 "id": self.object.id,
-                "message": self.object.supply.name
+                "message": self.object.product.supply.name,
             })
         except:
             return JsonResponse({
@@ -996,7 +996,7 @@ class SupplyItemCheckinView(LoginRequiredMixin, PermissionRequiredMixin, BaseDet
 
             return JsonResponse({
                 "status": "success",
-                "message": self.object.supply.name
+                "message": self.object.product.supply.name
             })
         except:
             return JsonResponse({
