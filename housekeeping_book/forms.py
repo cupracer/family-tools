@@ -52,6 +52,16 @@ class CategoryForm(PopRequestMixin, forms.ModelForm):
 
 
 class BookingForm(PopRequestMixin, forms.ModelForm):
+    booking_date = forms.DateField(
+        input_formats=['%d.%m.%Y'],
+        widget=DatePickerInput(
+            format='%d.%m.%Y',
+            options={
+                'locale': 'de',
+            },
+        ),
+    )
+
     class Meta:
         model = Booking
         fields = ('category', 'account_holder', 'booking_date', 'description', 'amount')
@@ -68,18 +78,33 @@ class BookingForm(PopRequestMixin, forms.ModelForm):
                     'data-minimum-input-length': 0,
                 }
             ),
-            'booking_date': DatePickerInput(
-                format='%d.%m.%Y',
-                options={
-                    'locale': 'de'
-                }
-            ),
             'description': TextInput(attrs={'class': 'form-control'}),
             'amount': NumberInput(attrs={'class': 'form-control'}),
         }
 
 
 class PeriodicBookingForm(PopRequestMixin, forms.ModelForm):
+    start_date = forms.DateField(
+        input_formats=['%d.%m.%Y'],
+        widget=DatePickerInput(
+            format='%d.%m.%Y',
+            options={
+                'locale': 'de',
+            },
+        ),
+    )
+    end_date = forms.DateField(
+        required=False,
+        input_formats=['%d.%m.%Y'],
+        widget=DatePickerInput(
+            format='%d.%m.%Y',
+            options={
+                'locale': 'de',
+            },
+        ),
+    )
+
+
     class Meta:
         model = PeriodicBooking
         fields = ('category', 'account_holder', 'booking_day_of_month', 'description', 'amount',
@@ -100,18 +125,6 @@ class PeriodicBookingForm(PopRequestMixin, forms.ModelForm):
             'booking_day_of_month': NumberInput(attrs={'class': 'form-control'}),
             'description': TextInput(attrs={'class': 'form-control'}),
             'amount': NumberInput(attrs={'class': 'form-control'}),
-            'start_date': DatePickerInput(
-                format='%d.%m.%Y',
-                options={
-                    'locale': 'de'
-                }
-            ),
-            'end_date': DatePickerInput(
-                format='%d.%m.%Y',
-                options={
-                    'locale': 'de'
-                }
-            ),
             'interval': NumberInput(attrs={'class': 'form-control'}),
         }
 
