@@ -82,8 +82,23 @@
                 ],
                 "columns": [
                     { "className": "min col-right", },
-                    { "className": "min col-center", },
-                    { "className": "min" },
+                    {
+                        "className": "min col-center",
+                        "render": function (data) {
+                            if(data) {
+                                return moment(data).locale('de').format('L');
+                            }
+                        }
+                    },
+                    {
+                        "className": "min col-center",
+                        "defaultContent": '-',
+                        "render": function (data) {
+                            if(data) {
+                                return moment(data).locale('de').format('L');
+                            }
+                        }
+                    },
                     {
                         //is_current
                         "visible": false

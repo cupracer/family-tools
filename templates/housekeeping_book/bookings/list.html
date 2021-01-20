@@ -67,7 +67,14 @@
                 },
                 "columns": [
                    { "className": "min col-right", },
-                    { "className": "min col-center", },
+                    {
+                        "className": "min col-center",
+                        "render": function (data) {
+                            if(data) {
+                                return moment(data).locale('de').format('L');
+                            }
+                        }
+                    },
                     {% if request.user.is_staff %}
                         { "className": "min" },
                     {% endif %}
