@@ -24,7 +24,7 @@
                                     {{ form.source }}
 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>{{ form.purchase_date.label_tag }}</label>
                                                 {{ form.purchase_date.errors }}
@@ -46,7 +46,9 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4"></div>
+
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>{{ form.best_before_date.label_tag }}</label>
                                                 {{ form.best_before_date.errors }}
@@ -54,10 +56,7 @@
                                                 <small id="best_before_date_help" class="form-text text-muted">best-before date</small>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="col-md-8"></div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>{{ form.count.label_tag }}</label>

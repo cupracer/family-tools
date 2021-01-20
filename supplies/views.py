@@ -1,4 +1,4 @@
-from copy import copy
+from datetime import datetime
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db import models
@@ -838,6 +838,18 @@ class SupplyItemCreateView(LoginRequiredMixin, PermissionRequiredMixin, PassRequ
         'second_level': 'supply_items'
     }
 
+    def get_initial(self):
+        initial = super(SupplyItemCreateView, self).get_initial()
+        initial = initial.copy()
+
+        if 'supplies.add_supplyitem.purchase_date' in self.request.session:
+            initial['purchase_date'] = datetime.fromisoformat(
+                self.request.session['supplies.add_supplyitem.purchase_date'])
+        else:
+            initial['purchase_date'] = datetime.today().date
+
+        return initial
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['site'] = self.site
@@ -851,11 +863,12 @@ class SupplyItemCreateView(LoginRequiredMixin, PermissionRequiredMixin, PassRequ
             form.instance.pk = None
             self.object = form.save()
 
+        self.request.session['supplies.add_supplyitem.purchase_date'] = form.cleaned_data['purchase_date'].isoformat()
         success_message = self.get_success_message(form.cleaned_data)
         if success_message:
             messages.success(self.request, success_message)
 
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(reverse_lazy('supply_item_new'))
 
 
 class SupplyItemUpdateView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, generic.UpdateView):

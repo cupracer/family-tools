@@ -1,7 +1,7 @@
 from bootstrap_datepicker_plus import DatePickerInput
 from bootstrap_modal_forms.mixins import PopRequestMixin
 from django import forms
-from django.forms import TextInput, NumberInput, CheckboxInput
+from django.forms import TextInput, NumberInput, CheckboxInput, ModelChoiceField
 from django_select2.forms import ModelSelect2Widget
 from .models import Category, Brand, Supply, Unit, SupplyItem, Packaging, Product
 
@@ -176,31 +176,41 @@ class ProductSelect2Widget(ModelSelect2Widget):
 
 
 class SupplyItemForm(PopRequestMixin, forms.ModelForm):
+    purchase_date = forms.DateField(
+        input_formats=['%d.%m.%Y'],
+        widget=DatePickerInput(
+            format='%d.%m.%Y',
+            options={
+                'locale': 'de'
+            },
+        ),
+    )
+    best_before_date = forms.DateField(
+        required=False,
+        label="MHD",
+        input_formats=['%d.%m.%Y'],
+        widget=DatePickerInput(
+            format='%d.%m.%Y',
+            options={
+                'locale': 'de',
+                'useCurrent': False
+            },
+        ),
+    )
+    product = ModelChoiceField(
+        queryset=Product.objects.all(),
+        widget=ProductSelect2Widget(
+            attrs={
+                'class': 'form-control',
+                'data-minimum-input-length': 0,
+                'autofocus': 'autofocus',
+            }
+        )
+    )
+
     class Meta:
         model = SupplyItem
         fields = ('product', 'purchase_date', 'best_before_date',)
-        widgets = {
-            'product': ProductSelect2Widget(
-                attrs={
-                    'class': 'form-control',
-                    'data-minimum-input-length': 0,
-                    'autofocus': 'autofocus',
-                }
-            ),
-            'purchase_date': DatePickerInput(
-                format='%d.%m.%y',
-                options={
-                    'locale': 'de'
-                }
-            ),
-            'best_before_date': DatePickerInput(
-                format='%d.%m.%y',
-                options={
-                    'locale': 'de',
-                    'useCurrent': False
-                }
-            ),
-        }
 
 
 class SupplyItemCreateForm(SupplyItemForm):
@@ -208,7 +218,7 @@ class SupplyItemCreateForm(SupplyItemForm):
         initial=1,
         widget=NumberInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
             }
         ))
 
