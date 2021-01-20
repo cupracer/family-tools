@@ -69,6 +69,7 @@ class BookingForm(PopRequestMixin, forms.ModelForm):
                 }
             ),
             'booking_date': DatePickerInput(
+                format='%d.%m.%Y',
                 options={
                     'locale': 'de'
                 }
@@ -99,8 +100,18 @@ class PeriodicBookingForm(PopRequestMixin, forms.ModelForm):
             'booking_day_of_month': NumberInput(attrs={'class': 'form-control'}),
             'description': TextInput(attrs={'class': 'form-control'}),
             'amount': NumberInput(attrs={'class': 'form-control'}),
-            'start_date': DatePickerInput(),
-            'end_date': DatePickerInput(),
+            'start_date': DatePickerInput(
+                format='%d.%m.%Y',
+                options={
+                    'locale': 'de'
+                }
+            ),
+            'end_date': DatePickerInput(
+                format='%d.%m.%Y',
+                options={
+                    'locale': 'de'
+                }
+            ),
             'interval': NumberInput(attrs={'class': 'form-control'}),
         }
 

@@ -186,11 +186,13 @@ class SupplyItemForm(PopRequestMixin, forms.ModelForm):
                 }
             ),
             'purchase_date': DatePickerInput(
+                format='%d.%m.%y',
                 options={
                     'locale': 'de'
                 }
             ),
             'best_before_date': DatePickerInput(
+                format='%d.%m.%y',
                 options={
                     'locale': 'de',
                     'useCurrent': False
