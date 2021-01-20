@@ -170,7 +170,8 @@ class ProductSelect2Widget(ModelSelect2Widget):
     search_fields = [
         'name__icontains',
         'supply__name__icontains',
-        'brand__name__icontains'
+        'brand__name__icontains',
+        'ean__contains'
     ]
 
 
@@ -183,6 +184,7 @@ class SupplyItemForm(PopRequestMixin, forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'data-minimum-input-length': 0,
+                    'autofocus': 'autofocus',
                 }
             ),
             'purchase_date': DatePickerInput(

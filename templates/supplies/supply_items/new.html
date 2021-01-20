@@ -24,6 +24,17 @@
                                     {{ form.source }}
 
                                     <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ form.purchase_date.label_tag }}</label>
+                                                {{ form.purchase_date.errors }}
+                                                {{ form.purchase_date }}
+                                                <small id="purchase_date_help" class="form-text text-muted">purchase date</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>{{ form.product.label_tag }}</label>
@@ -35,14 +46,6 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>{{ form.purchase_date.label_tag }}</label>
-                                                {{ form.purchase_date.errors }}
-                                                {{ form.purchase_date }}
-                                                <small id="purchase_date_help" class="form-text text-muted">purchase date</small>
-                                            </div>
-                                        </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>{{ form.best_before_date.label_tag }}</label>
@@ -87,3 +90,13 @@
         <!-- /.col -->
     </div>
 {% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#id_product').select2('open');
+        });
+    </script>
+{% endblock javascript %}
