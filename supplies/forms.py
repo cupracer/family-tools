@@ -110,7 +110,7 @@ class SupplySelect2Widget(ModelSelect2Widget):
 class ProductForm(PopRequestMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('supply', 'name', 'brand', 'unit', 'amount', 'packaging', 'bio_label', 'min_count')
+        fields = ('supply', 'name', 'brand', 'ean', 'unit', 'amount', 'packaging', 'bio_label', 'min_count')
         widgets = {
             'supply': SupplySelect2Widget(
                 attrs={
@@ -118,16 +118,22 @@ class ProductForm(PopRequestMixin, forms.ModelForm):
                     'data-minimum-input-length': 0,
                 }
             ),
-            'name': TextInput(attrs={
-                'class': 'form-control',
-                'autofocus': 'autofocus',
-            }
+            'name': TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'autofocus': 'autofocus',
+                }
             ),
             'brand': BrandSelect2Widget(
                 attrs={
                     'class': 'form-control',
                     'data-minimum-input-length': 0,
                 }
+            ),
+            'ean': TextInput(
+                attrs={
+                    'class': 'form-control',
+                },
             ),
             'unit': UnitSelect2Widget(
                 attrs={

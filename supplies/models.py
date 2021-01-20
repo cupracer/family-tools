@@ -61,6 +61,7 @@ class Product(models.Model):
     supply = models.ForeignKey(Supply, on_delete=models.PROTECT, null=False, blank=False)
     name = models.CharField(null=True, blank=True, max_length=500)
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, null=True, blank=True)
+    ean = models.CharField('EAN', null=True, blank=True, max_length=13)
     unit = models.ForeignKey(Unit, on_delete=models.PROTECT, null=False, blank=False)
     amount = models.IntegerField()
     bio_label = models.BooleanField('Bio', default=False)
