@@ -1,5 +1,8 @@
 # FamilyTools
 
+## Deprecation notice:
+**This project will not be developed any further. Any use is strongly discouraged.**
+
 ## About
 
 This web project is intended to provide a collection of useful tools on topics related to a family or shared household. At present, only a household book is included, which can be used to record and categorize income and expenditure. 
