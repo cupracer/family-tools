@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@v5.5.0
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           registry: docker.pkg.github.com
           name: docker.pkg.github.com/cupracer/family-tools/family-tools
