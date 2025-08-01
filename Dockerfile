@@ -1,4 +1,4 @@
-FROM python:3-slim
+FROM python:3.12-slim
 
 ENV SECRET_KEY="dummy"
 
@@ -12,7 +12,7 @@ USER appuser
 WORKDIR /opt/family-tools
 
 RUN pip install -r requirements.txt
-#RUN ./manage.py collectstatic
+RUN ./manage.py collectstatic
 
 EXPOSE 8000
 
